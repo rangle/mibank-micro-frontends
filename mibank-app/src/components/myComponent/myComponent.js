@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-require("mibank-navigation").defineCustomElements(window);
+require("mibank-components").defineCustomElements(window);
 
 class MyComponent extends Component {
   render() {
