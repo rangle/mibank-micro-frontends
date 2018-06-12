@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MyComponent from "./components/myComponent/myComponent";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -13,7 +14,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <my-component first="Stencil" last="'Don't call me a framework' JS" />
+        <MyComponent />
       </div>
     );
   }
