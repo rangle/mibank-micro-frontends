@@ -14,6 +14,7 @@
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
     "serve": "stencil-dev-server",
     "start": "npm run dev",
+    "storybook": "start-storybook -p 9001 -s ./www -c .storybook",
     "test": "jest",
     "test.watch": "jest --watch"
   },
@@ -22,8 +23,12 @@
     "@stencil/core": "^0.9.1",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
+    "@storybook/html": "^4.0.0-alpha.4",
     "@types/jest": "^21.1.1",
-    "jest": "^21.2.1"
+    "jest": "^21.2.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "velocity-react": "^1.4.1"
   },
   "repository": {
     "type": "git",
