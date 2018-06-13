@@ -2,12 +2,15 @@
   "namespace": "mycomponent",
   "fsNamespace": "mycomponent",
   "loader": "../mycomponent.js",
+  "corePolyfilled": "es5-build-disabled.js",
   "global": "mycomponent.global.js",
-  "core": "mycomponent.nqo1zgrh.js",
-  "corePolyfilled": "mycomponent.oh1vr137.js",
+  "core": "mycomponent.core.js",
   "components": {
+    "mi-navigation": {
+      "$": "mi-navigation"
+    },
     "my-component": {
-      "$": "o70a0g6k"
+      "$": "my-component"
     }
   }
 }

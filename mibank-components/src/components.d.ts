@@ -30,6 +30,41 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface MiNavigation {
+      'first': string;
+      'last': string;
+    }
+  }
+
+  interface HTMLMiNavigationElement extends StencilComponents.MiNavigation, HTMLStencilElement {}
+
+  var HTMLMiNavigationElement: {
+    prototype: HTMLMiNavigationElement;
+    new (): HTMLMiNavigationElement;
+  };
+  interface HTMLElementTagNameMap {
+    'mi-navigation': HTMLMiNavigationElement;
+  }
+  interface ElementTagNameMap {
+    'mi-navigation': HTMLMiNavigationElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'mi-navigation': JSXElements.MiNavigationAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MiNavigationAttributes extends HTMLAttributes {
+      'first'?: string;
+      'last'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface MyComponent {
       'first': string;
       'last': string;
