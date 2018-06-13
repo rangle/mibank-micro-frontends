@@ -1,15 +1,11 @@
 /*! Built with http://stenciljs.com */
-const { h } = window.mycomponent;
+const { h } = window.mibank;
 
-class MyComponent {
+class MiTable {
     render() {
-        return (h("div", null,
-            "Hello, World! I'm ",
-            this.first,
-            " ",
-            this.last));
+        return h("div", null, "Table");
     }
-    static get is() { return "my-component"; }
+    static get is() { return "mi-table"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
         "first": {
@@ -21,7 +17,6 @@ class MyComponent {
             "attr": "last"
         }
     }; }
-    static get style() { return ""; }
 }
 
-export { MyComponent };
+export { MiTable };

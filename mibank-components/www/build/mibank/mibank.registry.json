@@ -1,0 +1,25 @@
+{
+  "namespace": "mibank",
+  "fsNamespace": "mibank",
+  "loader": "../mibank.js",
+  "corePolyfilled": "es5-build-disabled.js",
+  "global": "mibank.global.js",
+  "core": "mibank.core.js",
+  "components": {
+    "mi-heading": {
+      "$": "mi-heading"
+    },
+    "mi-navigation": {
+      "$": "mi-navigation"
+    },
+    "mi-pie-graph": {
+      "$": "mi-pie-graph"
+    },
+    "mi-section": {
+      "$": "mi-section"
+    },
+    "mi-table": {
+      "$": "mi-table"
+    }
+  }
+}

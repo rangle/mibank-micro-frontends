@@ -1,15 +1,15 @@
 import { Component, Prop } from "@stencil/core";
 
 @Component({
-  tag: "mi-navigation",
-  styleUrl: "mi-navigation.css",
+  tag: "mi-pie-graph",
+  //   styleUrl: 'my-component.css',
   shadow: true
 })
-export class MiNavigation {
+export class MiPieGraph {
   @Prop() first: string;
   @Prop() last: string;
 
   render() {
-    return <div>Navigation</div>;
+    return <div>Pie Graph</div>;
   }
 }

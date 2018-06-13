@@ -1,15 +1,15 @@
 import { Component, Prop } from "@stencil/core";
 
 @Component({
-  tag: "mi-navigation",
-  styleUrl: "mi-navigation.css",
+  tag: "mi-table",
+  //   styleUrl: 'my-component.css',
   shadow: true
 })
-export class MiNavigation {
+export class MiTable {
   @Prop() first: string;
   @Prop() last: string;
 
   render() {
-    return <div>Navigation</div>;
+    return <div>Table</div>;
   }
 }

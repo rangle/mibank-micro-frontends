@@ -30,6 +30,41 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface MiHeading {
+      'first': string;
+      'last': string;
+    }
+  }
+
+  interface HTMLMiHeadingElement extends StencilComponents.MiHeading, HTMLStencilElement {}
+
+  var HTMLMiHeadingElement: {
+    prototype: HTMLMiHeadingElement;
+    new (): HTMLMiHeadingElement;
+  };
+  interface HTMLElementTagNameMap {
+    'mi-heading': HTMLMiHeadingElement;
+  }
+  interface ElementTagNameMap {
+    'mi-heading': HTMLMiHeadingElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'mi-heading': JSXElements.MiHeadingAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MiHeadingAttributes extends HTMLAttributes {
+      'first'?: string;
+      'last'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface MiNavigation {
       'first': string;
       'last': string;
@@ -65,31 +100,101 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface MyComponent {
+    interface MiPieGraph {
       'first': string;
       'last': string;
     }
   }
 
-  interface HTMLMyComponentElement extends StencilComponents.MyComponent, HTMLStencilElement {}
+  interface HTMLMiPieGraphElement extends StencilComponents.MiPieGraph, HTMLStencilElement {}
 
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLMiPieGraphElement: {
+    prototype: HTMLMiPieGraphElement;
+    new (): HTMLMiPieGraphElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'mi-pie-graph': HTMLMiPieGraphElement;
   }
   interface ElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'mi-pie-graph': HTMLMiPieGraphElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'my-component': JSXElements.MyComponentAttributes;
+      'mi-pie-graph': JSXElements.MiPieGraphAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
+    export interface MiPieGraphAttributes extends HTMLAttributes {
+      'first'?: string;
+      'last'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface MiSection {
+      'first': string;
+      'last': string;
+    }
+  }
+
+  interface HTMLMiSectionElement extends StencilComponents.MiSection, HTMLStencilElement {}
+
+  var HTMLMiSectionElement: {
+    prototype: HTMLMiSectionElement;
+    new (): HTMLMiSectionElement;
+  };
+  interface HTMLElementTagNameMap {
+    'mi-section': HTMLMiSectionElement;
+  }
+  interface ElementTagNameMap {
+    'mi-section': HTMLMiSectionElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'mi-section': JSXElements.MiSectionAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MiSectionAttributes extends HTMLAttributes {
+      'first'?: string;
+      'last'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface MiTable {
+      'first': string;
+      'last': string;
+    }
+  }
+
+  interface HTMLMiTableElement extends StencilComponents.MiTable, HTMLStencilElement {}
+
+  var HTMLMiTableElement: {
+    prototype: HTMLMiTableElement;
+    new (): HTMLMiTableElement;
+  };
+  interface HTMLElementTagNameMap {
+    'mi-table': HTMLMiTableElement;
+  }
+  interface ElementTagNameMap {
+    'mi-table': HTMLMiTableElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'mi-table': JSXElements.MiTableAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MiTableAttributes extends HTMLAttributes {
       'first'?: string;
       'last'?: string;
     }

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import MyComponent from "./components/myComponent/myComponent";
 import logo from "./logo.svg";
 import "./App.css";
+
+require("mibank-components").defineCustomElements(window);
 
 class App extends Component {
   render() {
@@ -14,8 +15,20 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <MyComponent />
+        <mi-heading />
         <mi-navigation />
+        <mi-section>
+          <mi-table />
+          <mi-pie-graph />
+        </mi-section>
+        <mi-section>
+          <mi-table />
+          <mi-pie-graph />
+        </mi-section>
+        <mi-section>
+          <mi-table />
+          <mi-pie-graph />
+        </mi-section>
       </div>
     );
   }

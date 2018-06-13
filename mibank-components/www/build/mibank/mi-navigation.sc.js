@@ -1,9 +1,9 @@
 /*! Built with http://stenciljs.com */
-const { h } = window.mycomponent;
+const { h } = window.mibank;
 
 class MiNavigation {
     render() {
-        return h("div", null, "NAVIGATION");
+        return h("div", null, "Navigation");
     }
     static get is() { return "mi-navigation"; }
     static get encapsulation() { return "shadow"; }

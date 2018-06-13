@@ -1,6 +1,6 @@
 /*! Built with http://stenciljs.com */
 (function(Context,namespace,hydratedCssClass,resourcesUrl,s){"use strict";
-s=document.querySelector("script[data-namespace='mycomponent']");if(s){resourcesUrl=s.getAttribute('data-resources-url');}
+s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s.getAttribute('data-resources-url');}
 (function(window, document, Context, namespace) {
   'use strict';
   /**
@@ -2224,4 +2224,4 @@ s=document.querySelector("script[data-namespace='mycomponent']");if(s){resources
   // esm build which uses es module imports and dynamic imports
   createPlatformMain(namespace, Context, window, document, resourcesUrl, hydratedCssClass);
 })(window, document, Context, namespace);
-})({},"mycomponent","hydrated");
+})({},"mibank","hydrated");
