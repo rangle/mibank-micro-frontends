@@ -30,6 +30,41 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface MiChartJs {
+      'data': object;
+      'type': string;
+    }
+  }
+
+  interface HTMLMiChartJsElement extends StencilComponents.MiChartJs, HTMLStencilElement {}
+
+  var HTMLMiChartJsElement: {
+    prototype: HTMLMiChartJsElement;
+    new (): HTMLMiChartJsElement;
+  };
+  interface HTMLElementTagNameMap {
+    'mi-chart-js': HTMLMiChartJsElement;
+  }
+  interface ElementTagNameMap {
+    'mi-chart-js': HTMLMiChartJsElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'mi-chart-js': JSXElements.MiChartJsAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MiChartJsAttributes extends HTMLAttributes {
+      'data'?: object;
+      'type'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface MiHeading {
       'first': string;
       'last': string;

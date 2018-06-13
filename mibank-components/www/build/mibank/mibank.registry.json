@@ -6,6 +6,9 @@
   "global": "mibank.global.js",
   "core": "mibank.core.js",
   "components": {
+    "mi-chart-js": {
+      "$": "mi-chart-js"
+    },
     "mi-heading": {
       "$": "mi-heading"
     },
