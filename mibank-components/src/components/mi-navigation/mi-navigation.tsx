@@ -10,6 +10,6 @@ export class MiNavigation {
   @Prop() last: string;
 
   render() {
-    return <div>Navigation</div>;
+    return <div>{this.first}</div>;
   }
 }

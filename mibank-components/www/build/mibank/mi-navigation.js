@@ -3,7 +3,7 @@ const { h } = window.mibank;
 
 class MiNavigation {
     render() {
-        return h("div", null, "Navigation");
+        return h("div", null, this.first);
     }
     static get is() { return "mi-navigation"; }
     static get encapsulation() { return "shadow"; }

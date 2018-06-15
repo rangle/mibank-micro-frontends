@@ -4,10 +4,7 @@
     "allowUnreachableCode": false,
     "declaration": false,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2015"
-    ],
+    "lib": ["dom", "es2015", "es2017"],
     "moduleResolution": "node",
     "module": "es2015",
     "target": "es2015",
@@ -16,11 +13,9 @@
     "jsx": "react",
     "jsxFactory": "h"
   },
-  "include": [
-    "src",
-    "types/jsx.d.ts"
-  ],
+  "include": ["src", "types/jsx.d.ts"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/components/mi-pie-graph/mi-pie-graph.stories.ts"
   ]
 }

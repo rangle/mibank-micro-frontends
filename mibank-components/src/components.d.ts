@@ -136,8 +136,7 @@ declare global {
 
   namespace StencilComponents {
     interface MiPieGraph {
-      'first': string;
-      'last': string;
+      'data': object;
     }
   }
 
@@ -160,8 +159,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MiPieGraphAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+      'data'?: object;
     }
   }
 }

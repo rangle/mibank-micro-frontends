@@ -7,17 +7,11 @@ import { Component, Prop, State, Element } from "@stencil/core";
 export class MiPieGraph {
   @Element() graph: any;
   @State() pieChart: any;
-  @Prop() first: string;
-  @Prop() last: string;
+  @Prop() data: object;
 
   render() {
-    var data = {
-      datasets: [
-        {
-          data: [10, 20, 30],
-          backgroundColor: ["red", "yellow", "blue"]
-        }
-      ],
+    const data = {
+      datasets: this.data,
       labels: ["Red", "Yellow", "Blue"]
     };
     return <mi-chart-js type="pie" data={data} />;
