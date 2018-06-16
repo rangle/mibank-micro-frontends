@@ -12,18 +12,6 @@
   <mi-table></mi-table>
   <mi-pie-graph data="[{&quot;data&quot;:[10,20,30],&quot;backgroundColor&quot;:[&quot;red&quot;,&quot;yellow&quot;,&quot;blue&quot;]}]"></mi-pie-graph>
 
-  <script>
-    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      // auto-unregister service worker during dev mode
-      navigator.serviceWorker.getRegistration().then(function(registration) {
-        if (registration) {
-          registration.unregister().then(function() { location.reload(true) });
-        }
-      });
-    }
-  </script>
-
-
 
 <script>
   // window.onload = function () {

@@ -16,7 +16,7 @@
       "$": "mi-navigation"
     },
     "mi-pie-graph": {
-      "$": "mi-pie-graph"
+      "$": "mi-chart-js"
     },
     "mi-section": {
       "$": "mi-section"

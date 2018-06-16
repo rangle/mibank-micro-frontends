@@ -1,22 +1,21 @@
 import { storiesOf } from "@storybook/html";
-import { withKnobs, number } from "@storybook/addon-knobs";
+import { withKnobs, array } from "@storybook/addon-knobs";
+import { HTMLChartElement } from "./mi-pie-graph";
 
 storiesOf("Pie Graph", module)
   .addDecorator(withKnobs)
   .add("with Knobs", () => {
-    const dataSet = [
+    let dataSet = [
       {
-        data: [
-          number("DataPoint1", 10),
-          number("DataPoint2", 20),
-          number("DataPoint3", 30)
-        ],
+        data: array("Data Set", [10, 20, 30]),
         backgroundColor: ["red", "yellow", "blue"]
       }
     ];
 
-    const chart = document.createElement("mi-pie-graph");
-    chart.data = dataSet;
+    const chart: HTMLChartElement = <HTMLChartElement>(
+      document.createElement("mi-pie-graph")
+    );
 
+    chart.data = dataSet;
     return chart;
   });

@@ -26,12 +26,17 @@ declare global {
   interface HTMLAttributes {}
 }
 
+import {
+  ChartData,
+  ChartDataSets,
+} from 'chart.js';
 
 declare global {
 
   namespace StencilComponents {
     interface MiChartJs {
-      'data': object;
+      'addData': (label: string, data: ChartDataSets) => void;
+      'data': ChartData;
       'type': string;
     }
   }
@@ -55,7 +60,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MiChartJsAttributes extends HTMLAttributes {
-      'data'?: object;
+      'data'?: ChartData;
       'type'?: string;
     }
   }
@@ -136,7 +141,7 @@ declare global {
 
   namespace StencilComponents {
     interface MiPieGraph {
-      'data': object;
+      'data': ChartDataSets[];
     }
   }
 
@@ -159,7 +164,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MiPieGraphAttributes extends HTMLAttributes {
-      'data'?: object;
+      'data'?: ChartDataSets[];
     }
   }
 }

@@ -1,14 +1,22 @@
-import { Component, Prop, Element } from "@stencil/core";
-import Chart from "chart.js";
+import { Component, Prop, Element, Method } from "@stencil/core";
+import Chart, { ChartData, ChartDataSets } from "chart.js";
 
 @Component({
-  tag: "mi-chart-js"
+  tag: "mi-chart-js",
+  styleUrl: "mi-chart-js.css"
 })
 export class ChartJS {
-  chart: HTMLCanvasElement;
+  chart: Chart;
   @Element() canvas: HTMLElement;
   @Prop() type: string;
-  @Prop() data: object;
+  @Prop() data: ChartData;
+
+  @Method()
+  addData(label: string, data: ChartDataSets) {
+    this.chart.data.datasets.push(data);
+    this.chart.data.labels.push(label);
+    this.chart.update();
+  }
 
   componentDidLoad(): void {
     this.drawChart();
@@ -24,7 +32,7 @@ export class ChartJS {
 
   render(): JSX.Element {
     return (
-      <div>
+      <div class="chart">
         <canvas id="chart" width="400" height="400" />
       </div>
     );

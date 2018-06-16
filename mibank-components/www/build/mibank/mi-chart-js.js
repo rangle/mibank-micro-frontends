@@ -18370,6 +18370,11 @@ Chart.canvasHelpers = Chart.helpers.canvas;
 Chart.layoutService = Chart.layouts;
 
 class ChartJS {
+    addData(label, data) {
+        this.chart.data.datasets.push(data);
+        this.chart.data.labels.push(label);
+        this.chart.update();
+    }
     componentDidLoad() {
         this.drawChart();
     }
@@ -18381,11 +18386,14 @@ class ChartJS {
         });
     }
     render() {
-        return (h("div", null,
+        return (h("div", { class: "chart" },
             h("canvas", { id: "chart", width: "400", height: "400" })));
     }
     static get is() { return "mi-chart-js"; }
     static get properties() { return {
+        "addData": {
+            "method": true
+        },
         "canvas": {
             "elementRef": true
         },
@@ -18398,6 +18406,35 @@ class ChartJS {
             "attr": "type"
         }
     }; }
+    static get style() { return ".chart {\n  width: 400px;\n  height: 400px;\n}"; }
 }
 
-export { ChartJS as MiChartJs };
+class MiPieGraph {
+    handleDataChange(newValue, oldValue) {
+        console.log(newValue);
+        console.log(oldValue);
+    }
+    render() {
+        const data = Object.assign({}, {
+            datasets: [],
+            labels: ["Red", "Yellow", "Blue"]
+        }, { datasets: this.data });
+        return h("mi-chart-js", { type: "pie", data: data });
+    }
+    static get is() { return "mi-pie-graph"; }
+    static get properties() { return {
+        "data": {
+            "type": "Any",
+            "attr": "data",
+            "watchCallbacks": ["handleDataChange"]
+        },
+        "graph": {
+            "elementRef": true
+        },
+        "pieChart": {
+            "state": true
+        }
+    }; }
+}
+
+export { ChartJS as MiChartJs, MiPieGraph };
