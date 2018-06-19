@@ -5,6 +5,21 @@ import "./App.css";
 require("mibank-components").defineCustomElements(window);
 
 class App extends Component {
+  dataSet;
+  constructor(props) {
+    super(props);
+    this.dataSet = [
+      {
+        data: [10, 20, 30],
+        backgroundColor: ["red", "yellow", "blue"]
+      }
+    ];
+
+    this.pieGraph = React.createRef();
+  }
+  componentDidMount() {
+    this.pieGraph.current.data = this.dataSet;
+  }
   render() {
     return (
       <div className="App">
@@ -19,7 +34,6 @@ class App extends Component {
         <mi-navigation />
         <mi-section>
           <mi-table />
-          <mi-pie-graph />
         </mi-section>
         <mi-section>
           <mi-table />
@@ -29,6 +43,7 @@ class App extends Component {
           <mi-table />
           <mi-pie-graph />
         </mi-section>
+        <mi-pie-graph ref={this.pieGraph} />
       </div>
     );
   }
