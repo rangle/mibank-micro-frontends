@@ -29,13 +29,16 @@ declare global {
 import {
   ChartData,
   ChartDataSets,
+} from 'chart.js/dist/chart.bundle.js';
+import {
+  ChartDataSets as ChartDataSets2,
 } from 'chart.js';
 
 declare global {
 
   namespace StencilComponents {
     interface MiChartJs {
-      'addData': (label: string, data: ChartDataSets) => void;
+      'addData': (label: string, data: any) => void;
       'data': ChartData;
       'type': string;
     }

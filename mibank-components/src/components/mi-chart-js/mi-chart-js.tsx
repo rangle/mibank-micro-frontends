@@ -1,5 +1,5 @@
 import { Component, Prop, Element, Method } from "@stencil/core";
-import Chart, { ChartData, ChartDataSets } from "chart.js";
+import Chart, { ChartData, ChartDataSets } from "chart.js/dist/chart.bundle.js";
 
 @Component({
   tag: "mi-chart-js",

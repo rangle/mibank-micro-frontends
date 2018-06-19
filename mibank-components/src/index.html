@@ -13,17 +13,15 @@
   <mi-navigation first="Navigation"></mi-navigation>
   <mi-section></mi-section>
   <mi-table></mi-table>
-  <mi-pie-graph data='[{"data":[10,20,30],"backgroundColor":["red","yellow","blue"]}]'></mi-pie-graph>
 </body>
 
 <script>
-  // window.onload = function () {
-  //   var data = { tim: "test" };
-  //   var chart = document.querySelector('mi-pie-graph');
-  //   chart.update(data);
-  // }
-
-
+  window.onload = function () {
+    var data = { tim: "test" };
+    var chart = document.createElement('mi-pie-graph');
+    chart.data = [{ "data": [20, 20, 30], "backgroundColor": ["red", "yellow", "blue"] }];
+    document.body.appendChild(chart);
+  }
 </script>
 
 </html>
