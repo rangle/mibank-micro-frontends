@@ -1,2 +1,135 @@
 /*! Built with http://stenciljs.com */
-!function(e,t,n,r,i,s,a,o,c,u,l,p,d,m){for((l=e.mibank=e.mibank||{}).components=c,(d=c.filter(function(e){return e[2]}).map(function(e){return e[0]})).length&&((p=t.createElement("style")).innerHTML=d.join()+"{visibility:hidden}.hydrated{visibility:inherit}",p.setAttribute("data-styles",""),t.head.insertBefore(p,t.head.firstChild)),function(e,t,n){(e["s-apps"]=e["s-apps"]||[]).push("mibank"),n.componentOnReady||(n.componentOnReady=function(){var t=this;function n(n){if(t.nodeName.indexOf("-")>0){for(var r=e["s-apps"],i=0,s=0;s<r.length;s++)if(e[r[s]].componentOnReady){if(e[r[s]].componentOnReady(t,n))return;i++}if(i<r.length)return void(e["s-cr"]=e["s-cr"]||[]).push([t,n])}n(null)}return e.Promise?new e.Promise(n):{then:n}})}(e,0,u),i=i||l.resourcesUrl,p=(d=t.querySelectorAll("script")).length-1;p>=0&&!(m=d[p]).src&&!m.hasAttribute("data-resources-url");p--);d=m.getAttribute("data-resources-url"),!i&&d&&(i=d),!i&&m.src&&(i=(d=m.src.split("/").slice(0,-1)).join("/")+(d.length?"/":"")+"mibank/"),p=t.createElement("script"),function(e,t,n,r){return!(t.search.indexOf("core=esm")>0)&&(!(!(t.search.indexOf("core=es5")>0||"file:"===t.protocol)&&e.customElements&&e.customElements.define&&e.fetch&&e.CSS&&e.CSS.supports&&e.CSS.supports("color","var(--c)")&&"noModule"in n)||function(e){try{return new Function('import("")'),!1}catch(e){}return!0}())}(e,e.location,p)?p.src=i+"mibank.9puguh8y.js":(p.src=i+"mibank.lqrjgooa.js",p.setAttribute("type","module"),p.setAttribute("crossorigin",!0)),p.setAttribute("data-resources-url",i),p.setAttribute("data-namespace","mibank"),t.head.appendChild(p)}(window,document,0,0,0,0,0,0,[["mi-chart-js","n6i8w3nn",1,[["addData",6],["canvas",7],["data",1],["type",1,0,1,2]]],["mi-heading","g2fsexne",0,[["first",1,0,1,2],["last",1,0,1,2]],1],["mi-navigation","p0oxlejf",1,[["first",1,0,1,2],["last",1,0,1,2]],1],["mi-pie-graph","fddfmfeg",0,[["data",1],["graph",7],["pieChart",5]],1],["mi-section","owsbqfsk",1,[["first",1,0,1,2],["last",1,0,1,2]],1],["mi-table","koseprwr",0,[["first",1,0,1,2],["last",1,0,1,2]],1]],HTMLElement.prototype);
+(function(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCoreSsr, appCorePolyfilled, hydratedCssClass, components) {
+
+  function init(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCorePolyfilled, hydratedCssClass, components, HTMLElementPrototype, App, x, y, scriptElm) {
+    // create global namespace if it doesn't already exist
+    App = win[namespace] = win[namespace] || {};
+    App.components = components;
+    y = components.filter(function (c) { return c[2]; }).map(function (c) { return c[0]; });
+    if (y.length) {
+        // auto hide components until they been fully hydrated
+        // reusing the "x" and "i" variables from the args for funzies
+        x = doc.createElement('style');
+        x.innerHTML = y.join() + '{visibility:hidden}.' + hydratedCssClass + '{visibility:inherit}';
+        x.setAttribute('data-styles', '');
+        doc.head.insertBefore(x, doc.head.firstChild);
+    }
+    createComponentOnReadyPrototype(win, namespace, HTMLElementPrototype);
+    resourcesUrl = resourcesUrl || App.resourcesUrl;
+    // figure out the script element for this current script
+    y = doc.querySelectorAll('script');
+    for (x = y.length - 1; x >= 0; x--) {
+        scriptElm = y[x];
+        if (scriptElm.src || scriptElm.hasAttribute('data-resources-url')) {
+            break;
+        }
+    }
+    // get the resource path attribute on this script element
+    y = scriptElm.getAttribute('data-resources-url');
+    if (!resourcesUrl && y) {
+        // the script element has a data-resources-url attribute, always use that
+        resourcesUrl = y;
+    }
+    if (!resourcesUrl && scriptElm.src) {
+        // we don't have an exact resourcesUrl, so let's
+        // figure it out relative to this script's src and app's filesystem namespace
+        y = scriptElm.src.split('/').slice(0, -1);
+        resourcesUrl = (y.join('/')) + (y.length ? '/' : '') + fsNamespace + '/';
+    }
+    // request the core this browser needs
+    // test for native support of custom elements and fetch
+    // if either of those are not supported, then use the core w/ polyfills
+    // also check if the page was build with ssr or not
+    x = doc.createElement('script');
+    if (usePolyfills(win, win.location, x, 'import("")')) {
+        // requires the es5/polyfilled core
+        x.src = resourcesUrl + appCorePolyfilled;
+    }
+    else {
+        // let's do this!
+        x.src = resourcesUrl + appCore;
+        x.setAttribute('type', 'module');
+        x.setAttribute('crossorigin', true);
+    }
+    x.setAttribute('data-resources-url', resourcesUrl);
+    x.setAttribute('data-namespace', fsNamespace);
+    doc.head.appendChild(x);
+}
+function usePolyfills(win, location, scriptElm, dynamicImportTest) {
+    // fyi, dev mode has verbose if/return statements
+    // but it minifies to a nice 'lil one-liner ;)
+    if (location.search.indexOf('core=esm') > 0) {
+        // force esm build
+        return false;
+    }
+    if ((location.search.indexOf('core=es5') > 0) ||
+        (location.protocol === 'file:') ||
+        (!(win.customElements && win.customElements.define)) ||
+        (!win.fetch) ||
+        (!(win.CSS && win.CSS.supports && win.CSS.supports('color', 'var(--c)'))) ||
+        (!('noModule' in scriptElm))) {
+        // es5 build w/ polyfills
+        return true;
+    }
+    // final test to see if this browser support dynamic imports
+    return doesNotSupportsDynamicImports(dynamicImportTest);
+}
+function doesNotSupportsDynamicImports(dynamicImportTest) {
+    try {
+        new Function(dynamicImportTest);
+        return false;
+    }
+    catch (e) { }
+    return true;
+}
+function createComponentOnReadyPrototype(win, namespace, HTMLElementPrototype) {
+    (win['s-apps'] = win['s-apps'] || []).push(namespace);
+    if (!HTMLElementPrototype.componentOnReady) {
+        HTMLElementPrototype.componentOnReady = function componentOnReady() {
+            /*tslint:disable*/
+            var elm = this;
+            function executor(resolve) {
+                if (elm.nodeName.indexOf('-') > 0) {
+                    // window hasn't loaded yet and there's a
+                    // good chance this is a custom element
+                    var apps = win['s-apps'];
+                    var appsReady = 0;
+                    // loop through all the app namespaces
+                    for (var i = 0; i < apps.length; i++) {
+                        // see if this app has "componentOnReady" setup
+                        if (win[apps[i]].componentOnReady) {
+                            // this app's core has loaded call its "componentOnReady"
+                            if (win[apps[i]].componentOnReady(elm, resolve)) {
+                                // this component does belong to this app and would
+                                // have fired off the resolve fn
+                                // let's stop here, we're good
+                                return;
+                            }
+                            appsReady++;
+                        }
+                    }
+                    if (appsReady < apps.length) {
+                        // not all apps are ready yet
+                        // add it to the queue to be figured out when they are
+                        (win['s-cr'] = win['s-cr'] || []).push([elm, resolve]);
+                        return;
+                    }
+                }
+                // not a recognized app component
+                resolve(null);
+            }
+            // callback wasn't provided, let's return a promise
+            if (win.Promise) {
+                // use native/polyfilled promise
+                return new win.Promise(executor);
+            }
+            // promise may not have been polyfilled yet
+            return { then: executor };
+        };
+    }
+}
+
+
+  init(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCoreSsr, appCorePolyfilled, hydratedCssClass, components);
+
+  })(window, document, "mibank","mibank",0,"mibank.core.js","es5-build-disabled.js","hydrated",[["mi-chart-js","mi-chart-js",1,[["addData",6],["canvas",7],["data",1],["type",1,0,1,2]]],["mi-heading","mi-heading",0,[["first",1,0,1,2],["last",1,0,1,2]],1],["mi-navigation","mi-navigation",1,[["first",1,0,1,2],["last",1,0,1,2]],1],["mi-pie-graph","mi-pie-graph",0,[["data",1],["graph",7],["pieChart",5]],1],["mi-section","mi-section",1,0,1],["mi-table","mi-table",0,[["first",1,0,1,2],["last",1,0,1,2]],1]],HTMLElement.prototype);

@@ -1,2 +1,0 @@
-/*! Built with http://stenciljs.com */
-const{h:t}=window.mibank;class r{render(){return t("div",null,"Table")}static get is(){return"mi-table"}static get encapsulation(){return"shadow"}static get properties(){return{first:{type:String,attr:"first"},last:{type:String,attr:"last"}}}}export{r as MiTable};

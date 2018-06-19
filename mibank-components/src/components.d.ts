@@ -177,8 +177,7 @@ declare global {
 
   namespace StencilComponents {
     interface MiSection {
-      'first': string;
-      'last': string;
+
     }
   }
 
@@ -201,8 +200,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MiSectionAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+
     }
   }
 }

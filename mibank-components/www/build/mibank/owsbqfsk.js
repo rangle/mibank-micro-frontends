@@ -1,2 +1,0 @@
-/*! Built with http://stenciljs.com */
-const{h:t}=window.mibank;class e{render(){return t("div",null,"Section")}static get is(){return"mi-section"}static get encapsulation(){return"shadow"}static get properties(){return{first:{type:String,attr:"first"},last:{type:String,attr:"last"}}}static get style(){return""}}export{e as MiSection};

@@ -1,4 +1,4 @@
-import { Component, Prop } from "@stencil/core";
+import { Component } from "@stencil/core";
 
 @Component({
   tag: "mi-section",
@@ -6,10 +6,13 @@ import { Component, Prop } from "@stencil/core";
   shadow: true
 })
 export class MiSection {
-  @Prop() first: string;
-  @Prop() last: string;
-
   render() {
-    return <div>Section</div>;
+    return (
+      <div class="section">
+        <slot name="header" />
+        <slot />
+        <slot name="footer" />
+      </div>
+    );
   }
 }

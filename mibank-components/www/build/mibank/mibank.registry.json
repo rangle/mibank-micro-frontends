@@ -2,27 +2,27 @@
   "namespace": "mibank",
   "fsNamespace": "mibank",
   "loader": "../mibank.js",
+  "corePolyfilled": "es5-build-disabled.js",
   "global": "mibank.global.js",
-  "core": "mibank.lqrjgooa.js",
-  "corePolyfilled": "mibank.9puguh8y.js",
+  "core": "mibank.core.js",
   "components": {
     "mi-chart-js": {
-      "$": "n6i8w3nn"
+      "$": "mi-chart-js"
     },
     "mi-heading": {
-      "$": "g2fsexne"
+      "$": "mi-heading"
     },
     "mi-navigation": {
-      "$": "p0oxlejf"
+      "$": "mi-navigation"
     },
     "mi-pie-graph": {
-      "$": "fddfmfeg"
+      "$": "mi-pie-graph"
     },
     "mi-section": {
-      "$": "owsbqfsk"
+      "$": "mi-section"
     },
     "mi-table": {
-      "$": "koseprwr"
+      "$": "mi-table"
     }
   }
 }

@@ -3,7 +3,7 @@ import { withKnobs, array } from "@storybook/addon-knobs";
 import { HTMLChartElement } from "./mi-pie-graph";
 
 storiesOf("Pie Graph", module)
-  .addDecorator(withKnobs)
+  .addDecorator(withKnobs({ timestamps: true }))
   .add("with Knobs", () => {
     let dataSet = [
       {

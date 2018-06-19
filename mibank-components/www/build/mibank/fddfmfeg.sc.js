@@ -1,2 +1,0 @@
-/*! Built with http://stenciljs.com */
-const{h:t}=window.mibank;class e{render(){const e=Object.assign({},{datasets:[],labels:["Red","Yellow","Blue"]},{datasets:this.data});return t("mi-chart-js",{type:"pie",data:e})}static get is(){return"mi-pie-graph"}static get encapsulation(){return"shadow"}static get properties(){return{data:{type:"Any",attr:"data"},graph:{elementRef:!0},pieChart:{state:!0}}}}export{e as MiPieGraph};
