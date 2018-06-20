@@ -2,14 +2,35 @@ import { Component, Prop } from "@stencil/core";
 
 @Component({
   tag: "mi-table",
-  //   styleUrl: 'my-component.css',
+  styleUrl: "mi-table.css",
   shadow: true
 })
 export class MiTable {
-  @Prop() first: string;
-  @Prop() last: string;
+  @Prop() headings: Array<string> = [];
+  @Prop() data: Array<any> = [];
+
+  private generateHeader(): JSX.Element {
+    const row = this.headings.map(item => <th>{item}</th>);
+    return <tr>{row}</tr>;
+  }
+
+  private generateGrid(): JSX.Element {
+    const row = this.data.map(row => {
+      const result = row.map(cell => <td>{cell}</td>);
+      return <tr>{result}</tr>;
+    });
+    return row;
+  }
 
   render() {
-    return <div>Table</div>;
+    const header = this.generateHeader();
+    const grid = this.generateGrid();
+
+    return (
+      <table>
+        {header}
+        {grid}
+      </table>
+    );
   }
 }

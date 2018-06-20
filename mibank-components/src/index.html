@@ -70,6 +70,10 @@
     var nav = document.querySelector('mi-navigation');
     nav.navItems = [{ label: "About" }, { label: "Services" }, { label: "Clients" }, { label: "Contact Us" }];
 
+    var table = document.querySelector('mi-table');
+    table.headings = ["Column 1", "Column 2"];
+    table.data = [["ROW 1", "ROW 2"], ["ROW11", "ROW22"]];
+
     var data = { tim: "test" };
     var chart = document.createElement('mi-pie-graph');
     chart.data = [{ "data": [20, 20, 30], "backgroundColor": ["red", "yellow", "blue"] }];

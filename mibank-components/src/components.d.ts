@@ -214,8 +214,8 @@ declare global {
 
   namespace StencilComponents {
     interface MiTable {
-      'first': string;
-      'last': string;
+      'data': Array<any>;
+      'headings': Array<string>;
     }
   }
 
@@ -238,8 +238,8 @@ declare global {
   }
   namespace JSXElements {
     export interface MiTableAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+      'data'?: Array<any>;
+      'headings'?: Array<string>;
     }
   }
 }
