@@ -3,24 +3,25 @@ const { h } = window.mibank;
 
 class MiNavigation {
     constructor() {
-        this.navOpen = false;
+        this.isNavOpen = false;
         this.classNames = "sidenav";
     }
     toggleNavigation() {
-        if (!this.navOpen) {
-            this.classNames = "sidenav open";
-            this.navOpen = true;
+        console.log(this.navigationEl.childNodes);
+        if (!this.isNavOpen) {
+            this.openNavigation();
         }
         else {
-            this.classNames = "sidenav";
-            this.navOpen = false;
+            this.closeNavigation();
         }
     }
     closeNavigation() {
-        if (this.navOpen) {
-            this.classNames = "sidenav";
-            this.navOpen = false;
-        }
+        this.classNames = "sidenav";
+        this.isNavOpen = false;
+    }
+    openNavigation() {
+        this.classNames = "sidenav open";
+        this.isNavOpen = true;
     }
     render() {
         return (h("div", null,
@@ -38,8 +39,14 @@ class MiNavigation {
         "closeNavigation": {
             "method": true
         },
-        "navOpen": {
+        "isNavOpen": {
             "state": true
+        },
+        "navigationEl": {
+            "elementRef": true
+        },
+        "openNavigation": {
+            "method": true
         },
         "toggleNavigation": {
             "method": true

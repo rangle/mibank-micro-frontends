@@ -1,38 +1,39 @@
-import { Component, State, Method } from "@stencil/core";
+import { Component, State, Method, Element } from "@stencil/core";
 
 @Component({
   tag: "mi-navigation",
-  styleUrl: "mi-navigation.css",
-  shadow: true
+  styleUrl: "mi-navigation.css"
 })
 export class MiNavigation {
-  @State() navOpen: boolean = false;
-  private classNames: string = "sidenav";
+  @Element() navigationEl: HTMLMiNavigationElement;
+  @State() isNavOpen: boolean = false;
 
   @Method()
-  toggleNavigation() {
-    if (!this.navOpen) {
-      this.classNames = "sidenav open";
-      this.navOpen = true;
+  toggleNavigation(): void {
+    if (!this.isNavOpen) {
+      this.openNavigation();
     } else {
-      this.classNames = "sidenav";
-      this.navOpen = false;
+      this.closeNavigation();
     }
   }
 
   @Method()
-  closeNavigation() {
-    if (this.navOpen) {
-      this.classNames = "sidenav";
-      this.navOpen = false;
-    }
+  closeNavigation(): void {
+    this.navigationEl.querySelector(".sidenav").classList.remove("open");
+    this.isNavOpen = false;
+  }
+
+  @Method()
+  openNavigation(): void {
+    this.navigationEl.querySelector(".sidenav").classList.add("open");
+    this.isNavOpen = true;
   }
 
   render() {
     return (
       <div>
         <span onClick={() => this.toggleNavigation()}>open</span>
-        <div class={this.classNames}>
+        <div class="sidenav">
           <a href="javascript:void(0)" onClick={() => this.closeNavigation()}>
             Close
           </a>

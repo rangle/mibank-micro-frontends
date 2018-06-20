@@ -3,29 +3,28 @@ const { h } = window.mibank;
 
 class MiNavigation {
     constructor() {
-        this.navOpen = false;
-        this.classNames = "sidenav";
+        this.isNavOpen = false;
     }
     toggleNavigation() {
-        if (!this.navOpen) {
-            this.classNames = "sidenav open";
-            this.navOpen = true;
+        if (!this.isNavOpen) {
+            this.openNavigation();
         }
         else {
-            this.classNames = "sidenav";
-            this.navOpen = false;
+            this.closeNavigation();
         }
     }
     closeNavigation() {
-        if (this.navOpen) {
-            this.classNames = "sidenav";
-            this.navOpen = false;
-        }
+        this.navigationEl.querySelector(".sidenav").classList.remove("open");
+        this.isNavOpen = false;
+    }
+    openNavigation() {
+        this.navigationEl.querySelector(".sidenav").classList.add("open");
+        this.isNavOpen = true;
     }
     render() {
         return (h("div", null,
             h("span", { onClick: () => this.toggleNavigation() }, "open"),
-            h("div", { class: this.classNames },
+            h("div", { class: "sidenav" },
                 h("a", { href: "javascript:void(0)", onClick: () => this.closeNavigation() }, "Close"),
                 h("a", { href: "#" }, "About"),
                 h("a", { href: "#" }, "Services"),
@@ -33,13 +32,18 @@ class MiNavigation {
                 h("a", { href: "#" }, "Contact Us"))));
     }
     static get is() { return "mi-navigation"; }
-    static get encapsulation() { return "shadow"; }
     static get properties() { return {
         "closeNavigation": {
             "method": true
         },
-        "navOpen": {
+        "isNavOpen": {
             "state": true
+        },
+        "navigationEl": {
+            "elementRef": true
+        },
+        "openNavigation": {
+            "method": true
         },
         "toggleNavigation": {
             "method": true

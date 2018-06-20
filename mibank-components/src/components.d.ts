@@ -110,6 +110,7 @@ declare global {
   namespace StencilComponents {
     interface MiNavigation {
       'closeNavigation': () => void;
+      'openNavigation': () => void;
       'toggleNavigation': () => void;
     }
   }
