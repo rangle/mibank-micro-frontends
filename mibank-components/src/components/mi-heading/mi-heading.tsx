@@ -2,14 +2,19 @@ import { Component, Prop } from "@stencil/core";
 
 @Component({
   tag: "mi-heading",
-  //   styleUrl: 'my-component.css',
+  styleUrl: "mi-heading.css",
   shadow: true
 })
 export class MiHeading {
-  @Prop() first: string;
-  @Prop() last: string;
+  @Prop() type: string = "p";
+  @Prop() text: string;
 
   render() {
-    return <div>Heading</div>;
+    const TextElement = this.type;
+    return (
+      <TextElement>
+        <slot />
+      </TextElement>
+    );
   }
 }

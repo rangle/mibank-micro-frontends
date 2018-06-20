@@ -2,21 +2,27 @@
 const { h } = window.mibank;
 
 class MiHeading {
+    constructor() {
+        this.type = "p";
+    }
     render() {
-        return h("div", null, "Heading");
+        const TextElement = this.type;
+        return (h(TextElement, null,
+            h("slot", null)));
     }
     static get is() { return "mi-heading"; }
     static get encapsulation() { return "shadow"; }
     static get properties() { return {
-        "first": {
+        "text": {
             "type": String,
-            "attr": "first"
+            "attr": "text"
         },
-        "last": {
+        "type": {
             "type": String,
-            "attr": "last"
+            "attr": "type"
         }
     }; }
+    static get style() { return ""; }
 }
 
 export { MiHeading };
