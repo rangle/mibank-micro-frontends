@@ -109,8 +109,8 @@ declare global {
 
   namespace StencilComponents {
     interface MiNavigation {
-      'first': string;
-      'last': string;
+      'closeNavigation': () => void;
+      'toggleNavigation': () => void;
     }
   }
 
@@ -133,8 +133,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MiNavigationAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+
     }
   }
 }
