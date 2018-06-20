@@ -77,8 +77,8 @@ declare global {
 
   namespace StencilComponents {
     interface MiHeading {
-      'first': string;
-      'last': string;
+      'text': string;
+      'type': string;
     }
   }
 
@@ -101,8 +101,8 @@ declare global {
   }
   namespace JSXElements {
     export interface MiHeadingAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+      'text'?: string;
+      'type'?: string;
     }
   }
 }
