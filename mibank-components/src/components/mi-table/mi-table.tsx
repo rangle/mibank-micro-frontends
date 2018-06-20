@@ -1,5 +1,10 @@
 import { Component, Prop } from "@stencil/core";
 
+export interface HTMLTableElement extends HTMLElement {
+  headings?: Array<string>;
+  data?: Array<Array<any>>;
+}
+
 @Component({
   tag: "mi-table",
   styleUrl: "mi-table.css",
