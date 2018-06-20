@@ -31,6 +31,9 @@ import {
   ChartDataSets,
 } from 'chart.js/dist/chart.bundle.js';
 import {
+  NavigationItem,
+} from './components/mi-navigation/mi-navigation';
+import {
   ChartDataSets as ChartDataSets2,
 } from 'chart.js';
 
@@ -110,6 +113,7 @@ declare global {
   namespace StencilComponents {
     interface MiNavigation {
       'closeNavigation': () => void;
+      'navItems': Array<NavigationItem>;
       'openNavigation': () => void;
       'toggleNavigation': () => void;
     }
@@ -134,7 +138,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MiNavigationAttributes extends HTMLAttributes {
-
+      'navItems'?: Array<NavigationItem>;
     }
   }
 }

@@ -4,6 +4,7 @@ const { h } = window.mibank;
 class MiNavigation {
     constructor() {
         this.isNavOpen = false;
+        this.navItems = [];
     }
     toggleNavigation() {
         if (!this.isNavOpen) {
@@ -26,10 +27,7 @@ class MiNavigation {
             h("span", { onClick: () => this.toggleNavigation() }, "open"),
             h("div", { class: "sidenav" },
                 h("a", { href: "javascript:void(0)", onClick: () => this.closeNavigation() }, "Close"),
-                h("a", { href: "#" }, "About"),
-                h("a", { href: "#" }, "Services"),
-                h("a", { href: "#" }, "Clients"),
-                h("a", { href: "#" }, "Contact Us"))));
+                this.navItems.map(item => (h("a", { href: item.link ? item.link : "#" }, item.label))))));
     }
     static get is() { return "mi-navigation"; }
     static get properties() { return {
@@ -41,6 +39,10 @@ class MiNavigation {
         },
         "navigationEl": {
             "elementRef": true
+        },
+        "navItems": {
+            "type": "Any",
+            "attr": "nav-items"
         },
         "openNavigation": {
             "method": true

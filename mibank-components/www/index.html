@@ -7,13 +7,16 @@
 
 <body>
   <mi-heading></mi-heading>
-  <mi-navigation first="Navigation"></mi-navigation>
+  <mi-navigation></mi-navigation>
   <mi-section></mi-section>
   <mi-table></mi-table>
 
 
 <script>
   window.onload = function () {
+    var nav = document.querySelector('mi-navigation');
+    nav.navItems = [{ label: "About" }, { label: "Services" }, { label: "Clients" }, { label: "Contact Us" }];
+
     var data = { tim: "test" };
     var chart = document.createElement('mi-pie-graph');
     chart.data = [{ "data": [20, 20, 30], "backgroundColor": ["red", "yellow", "blue"] }];

@@ -1,4 +1,9 @@
-import { Component, State, Method, Element } from "@stencil/core";
+import { Component, State, Method, Element, Prop } from "@stencil/core";
+
+export interface NavigationItem {
+  label: string;
+  link?: string;
+}
 
 @Component({
   tag: "mi-navigation",
@@ -7,6 +12,7 @@ import { Component, State, Method, Element } from "@stencil/core";
 export class MiNavigation {
   @Element() navigationEl: HTMLMiNavigationElement;
   @State() isNavOpen: boolean = false;
+  @Prop() navItems: Array<NavigationItem> = [];
 
   @Method()
   toggleNavigation(): void {
@@ -37,10 +43,9 @@ export class MiNavigation {
           <a href="javascript:void(0)" onClick={() => this.closeNavigation()}>
             Close
           </a>
-          <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Clients</a>
-          <a href="#">Contact Us</a>
+          {this.navItems.map(item => (
+            <a href={item.link ? item.link : "#"}>{item.label}</a>
+          ))}
         </div>
       </div>
     );
