@@ -33,8 +33,10 @@ export class MiTable {
 
     return (
       <table>
+        <slot name="above" />
         {header}
         {grid}
+        <slot name="below" />
       </table>
     );
   }

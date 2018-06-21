@@ -21,8 +21,10 @@ class MiTable {
         const header = this.generateHeader();
         const grid = this.generateGrid();
         return (h("table", null,
+            h("slot", { name: "above" }),
             header,
-            grid));
+            grid,
+            h("slot", { name: "below" })));
     }
     static get is() { return "mi-table"; }
     static get encapsulation() { return "shadow"; }
