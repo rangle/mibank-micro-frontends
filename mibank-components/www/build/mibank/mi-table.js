@@ -38,7 +38,7 @@ class MiTable {
             "attr": "headings"
         }
     }; }
-    static get style() { return "table,\nth,\ntd {\n  border: 1px solid black;\n  border-collapse: collapse;\n}\n\nth,\ntd {\n  padding: 15px;\n}\n\ntable tr:nth-child(even) {\n  background-color: #eee;\n}\ntable tr:nth-child(odd) {\n  background-color: #fff;\n}\ntable th {\n  color: white;\n  background-color: black;\n}"; }
+    static get style() { return "table {\n  width: 100%;\n}\n\ntable,\nth,\ntd {\n  border: 1px solid black;\n  border-collapse: collapse;\n}\n\nth,\ntd {\n  padding: 15px;\n}\n\ntable tr:nth-child(even) {\n  background-color: #eee;\n}\ntable tr:nth-child(odd) {\n  background-color: #fff;\n}\ntable th {\n  color: white;\n  background-color: black;\n}"; }
 }
 
 export { MiTable };

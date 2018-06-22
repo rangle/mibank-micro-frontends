@@ -38,7 +38,7 @@ class MiTable {
             "attr": "headings"
         }
     }; }
-    static get style() { return "table[data-mi-table], th[data-mi-table], td[data-mi-table] {\n  border: 1px solid black;\n  border-collapse: collapse;\n}\n\nth[data-mi-table], td[data-mi-table] {\n  padding: 15px;\n}\n\ntable[data-mi-table]   tr[data-mi-table]:nth-child(even) {\n  background-color: #eee;\n}\ntable[data-mi-table]   tr[data-mi-table]:nth-child(odd) {\n  background-color: #fff;\n}\ntable[data-mi-table]   th[data-mi-table] {\n  color: white;\n  background-color: black;\n}"; }
+    static get style() { return "table[data-mi-table] {\n  width: 100%;\n}\n\ntable[data-mi-table], th[data-mi-table], td[data-mi-table] {\n  border: 1px solid black;\n  border-collapse: collapse;\n}\n\nth[data-mi-table], td[data-mi-table] {\n  padding: 15px;\n}\n\ntable[data-mi-table]   tr[data-mi-table]:nth-child(even) {\n  background-color: #eee;\n}\ntable[data-mi-table]   tr[data-mi-table]:nth-child(odd) {\n  background-color: #fff;\n}\ntable[data-mi-table]   th[data-mi-table] {\n  color: white;\n  background-color: black;\n}"; }
 }
 
 export { MiTable };
