@@ -28,7 +28,7 @@
     "@stencil/utils": "latest",
     "@storybook/addon-actions": "^4.0.0-alpha.9",
     "@storybook/addon-knobs": "^4.0.0-alpha.9",
-    "@storybook/html": "^4.0.0-alpha.4",
+    "@storybook/html": "^4.0.0-alpha.9",
     "@types/chart.js": "^2.7.22",
     "@types/jest": "^21.1.1",
     "awesome-typescript-loader": "^5.0.0",
