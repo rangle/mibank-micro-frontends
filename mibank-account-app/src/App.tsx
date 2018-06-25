@@ -8,22 +8,27 @@ import * as components from "mibank-components";
 components.defineCustomElements(window);
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: "yellow"
+    };
+  }
   private data = [
     {
-      data: [40, 20, 40],
-      backgroundColor: ["Red", "Yellow", "Blue"]
+      data: [20, 40],
+      backgroundColor: ["yellow", "blue"]
     }
   ];
 
   public render() {
     return (
       <div className="App">
-        <mi-heading type="h2">{"TEST"}</mi-heading>
-        <Table
-          headings={this.data[0].backgroundColor}
-          data={[this.data[0].data]}
-        />
-        <PieChart dataSet={this.data} />
+        <mi-section>
+          <mi-heading type="h1">{"TEST"}</mi-heading>
+          <Table headings={["Yellow", "Blue"]} data={[this.data[0].data]} />
+          <PieChart dataSet={this.data} labels={["Yellow", "Blue"]} />
+        </mi-section>
       </div>
     );
   }

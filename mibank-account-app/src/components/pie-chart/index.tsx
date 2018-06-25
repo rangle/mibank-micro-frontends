@@ -2,15 +2,19 @@ import * as React from "react";
 
 export interface PieChartProps {
   dataSet: Array<any>;
+  labels: Array<string>;
 }
 
 class PieChart extends React.Component<PieChartProps> {
   private pieGraph;
   private dataSet;
+  private labels: Array<string>;
+
   constructor(props) {
     super(props);
     this.pieGraph = React.createRef();
     this.dataSet = props.dataSet;
+    this.labels = props.labels;
     this.onClick = this.onClick.bind(this);
   }
 
@@ -21,7 +25,7 @@ class PieChart extends React.Component<PieChartProps> {
   public componentDidMount() {
     this.pieGraph.current.data = {
       datasets: this.dataSet,
-      labels: ["Red", "Yellow", "Blue"]
+      labels: this.labels
     };
 
     this.pieGraph.current.options = {
