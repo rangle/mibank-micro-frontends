@@ -3,6 +3,7 @@ import * as React from "react";
 export interface PieChartProps {
   dataSet: Array<any>;
   labels: Array<string>;
+  onPieSelect?: Function;
 }
 
 class PieChart extends React.Component<PieChartProps, any, void> {
@@ -15,11 +16,6 @@ class PieChart extends React.Component<PieChartProps, any, void> {
     this.pieGraph = React.createRef();
     this.dataSet = props.dataSet;
     this.labels = props.labels;
-    this.onClick = this.onClick.bind(this);
-  }
-
-  private onClick(e) {
-    console.log(this.pieGraph.current.getDataAtElement(e));
   }
 
   public componentDidUpdate() {
@@ -33,10 +29,6 @@ class PieChart extends React.Component<PieChartProps, any, void> {
     this.pieGraph.current.data = {
       datasets: this.dataSet,
       labels: this.labels
-    };
-
-    this.pieGraph.current.options = {
-      onClick: e => this.onClick(e)
     };
   }
 

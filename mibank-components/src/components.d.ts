@@ -29,6 +29,9 @@ import {
   ChartOptions,
 } from 'chart.js/dist/chart.bundle.js';
 import {
+  PieSectionData,
+} from './components/mi-chart-js/mi-chart-js';
+import {
   NavigationItem,
 } from './components/mi-navigation/mi-navigation';
 import {
@@ -41,10 +44,11 @@ declare global {
     interface MiChartJs {
       'addData': (label: string, data: any) => void;
       'data': ChartData;
-      'getDataAtElement': (evt: any) => { label: any; value: any; };
+      'getDataAtElement': (evt: any) => PieSectionData;
       'options': ChartOptions;
       'ref': any;
       'type': string;
+      'updateChart': (data: any) => void;
     }
   }
 
@@ -220,6 +224,7 @@ declare global {
       'data': Array<any>;
       'headings': Array<string>;
       'ref': any;
+      'rowOnClick': Function;
     }
   }
 
@@ -245,6 +250,7 @@ declare global {
       'data'?: Array<any>;
       'headings'?: Array<string>;
       'ref'?: any;
+      'rowOnClick'?: Function;
     }
   }
 }

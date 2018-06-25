@@ -24,3 +24,7 @@ table th {
   color: white;
   background-color: black;
 }
+
+tr.selected {
+  border: red 3px solid;
+}
