@@ -11,16 +11,28 @@ class PieChart extends React.Component<PieChartProps> {
     super(props);
     this.pieGraph = React.createRef();
     this.dataSet = props.dataSet;
+    this.onClick = this.onClick.bind(this);
+  }
+
+  private onClick(e) {
+    console.log(this.pieGraph.current.getDataAtElement(e));
   }
 
   public componentDidMount() {
-    this.pieGraph.current.data = this.dataSet;
+    this.pieGraph.current.data = {
+      datasets: this.dataSet,
+      labels: ["Red", "Yellow", "Blue"]
+    };
+
+    this.pieGraph.current.options = {
+      onClick: e => this.onClick(e)
+    };
   }
 
   public render() {
     return (
       <div>
-        <mi-pie-graph ref={this.pieGraph} />
+        <mi-chart-js type="pie" ref={this.pieGraph} />
       </div>
     );
   }

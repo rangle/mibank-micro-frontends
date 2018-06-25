@@ -14,6 +14,10 @@ export class MiPieGraph {
   @State() pieChart: any;
   @Prop() data: ChartDataSets[];
 
+  getData() {
+    debugger;
+  }
+
   render() {
     const data: ChartData = Object.assign(
       {},

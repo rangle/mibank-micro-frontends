@@ -13,12 +13,9 @@ declare global {
   }
   namespace JSXElements {}
 
-  interface HTMLElement {
-    componentOnReady?: () => Promise<this | null>;
-  }
-
   interface HTMLStencilElement extends HTMLElement {
     componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
 
     forceUpdate(): void;
   }
@@ -29,6 +26,7 @@ declare global {
 import {
   ChartData,
   ChartDataSets,
+  ChartOptions,
 } from 'chart.js/dist/chart.bundle.js';
 import {
   NavigationItem,
@@ -43,6 +41,9 @@ declare global {
     interface MiChartJs {
       'addData': (label: string, data: any) => void;
       'data': ChartData;
+      'getDataAtElement': (evt: any) => { label: any; value: any; };
+      'options': ChartOptions;
+      'ref': any;
       'type': string;
     }
   }
@@ -67,6 +68,8 @@ declare global {
   namespace JSXElements {
     export interface MiChartJsAttributes extends HTMLAttributes {
       'data'?: ChartData;
+      'options'?: ChartOptions;
+      'ref'?: any;
       'type'?: string;
     }
   }
@@ -216,6 +219,7 @@ declare global {
     interface MiTable {
       'data': Array<any>;
       'headings': Array<string>;
+      'ref': any;
     }
   }
 
@@ -240,6 +244,7 @@ declare global {
     export interface MiTableAttributes extends HTMLAttributes {
       'data'?: Array<any>;
       'headings'?: Array<string>;
+      'ref'?: any;
     }
   }
 }

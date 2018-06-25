@@ -13,6 +13,7 @@ export interface HTMLTableElement extends HTMLElement {
 export class MiTable {
   @Prop() headings: Array<string> = [];
   @Prop() data: Array<any> = [];
+  @Prop() ref?: any;
 
   private generateHeader(): JSX.Element {
     const row = this.headings.map(item => <th>{item}</th>);
