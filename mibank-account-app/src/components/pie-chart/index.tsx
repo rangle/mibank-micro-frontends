@@ -5,7 +5,7 @@ export interface PieChartProps {
   labels: Array<string>;
 }
 
-class PieChart extends React.Component<PieChartProps> {
+class PieChart extends React.Component<PieChartProps, any, void> {
   private pieGraph;
   private dataSet;
   private labels: Array<string>;
@@ -20,6 +20,13 @@ class PieChart extends React.Component<PieChartProps> {
 
   private onClick(e) {
     console.log(this.pieGraph.current.getDataAtElement(e));
+  }
+
+  public componentDidUpdate() {
+    this.pieGraph.current.updateChart({
+      datasets: this.props.dataSet,
+      labels: this.props.labels
+    });
   }
 
   public componentDidMount() {
