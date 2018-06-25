@@ -1,17 +1,16 @@
 import * as React from "react";
 
-class PieChart extends React.Component {
-  protected pieGraph;
+export interface PieChartProps {
+  dataSet: Array<any>;
+}
+
+class PieChart extends React.Component<PieChartProps> {
+  private pieGraph;
   private dataSet;
   constructor(props) {
     super(props);
     this.pieGraph = React.createRef();
-    this.dataSet = [
-      {
-        data: [10, 20, 30],
-        backgroundColor: ["red", "yellow", "blue"]
-      }
-    ];
+    this.dataSet = props.dataSet;
   }
 
   public componentDidMount() {

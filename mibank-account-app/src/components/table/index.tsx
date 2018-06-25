@@ -1,18 +1,19 @@
 import * as React from "react";
 
-class Table extends React.Component {
+export interface TableProps {
+  data: Array<any>;
+  headings: Array<string>;
+}
+
+class Table extends React.Component<TableProps> {
+  private table;
   private headings;
   private data;
-  private table;
   constructor(props) {
     super(props);
     this.table = React.createRef();
-    this.headings = ["Account Name", "Amount"];
-    this.data = [
-      ["Account 1", "$1000"],
-      ["Account 2", "$2000"],
-      ["Account 3", "$3000"]
-    ];
+    this.headings = props.headings;
+    this.data = props.data;
   }
   public componentDidMount() {
     this.table.current.headings = this.headings;
