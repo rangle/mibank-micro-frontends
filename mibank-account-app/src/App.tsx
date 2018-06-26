@@ -22,7 +22,7 @@ class App extends React.Component<AccountProps, State, any> {
   constructor(props) {
     super(props);
     this.data = [[20, 40, 90], [10, 90, 40]];
-    this.backgroundColor = ["yellow", "blue", "red"];
+    this.backgroundColor = ["pink", "blue", "red"];
 
     this.state = {
       selected: this.data[0]
@@ -48,13 +48,13 @@ class App extends React.Component<AccountProps, State, any> {
         <mi-section>
           <mi-heading type="h1">{"TEST"}</mi-heading>
           <Table
-            headings={["Yellow", "Blue", "Red"]}
+            headings={["Pink", "Blue", "Red"]}
             data={this.data}
             onRowSelect={this.updateSelected}
           />
           <PieChart
             dataSet={[{ data, backgroundColor }]}
-            labels={["Yellow", "Blue", "Red"]}
+            labels={["Pink", "Blue", "Red"]}
           />
         </mi-section>
       </div>

@@ -1,2 +1,0 @@
-/*! Built with http://stenciljs.com */
-const{h:t}=window.mibank;class e{constructor(){this.type="p"}render(){const e=this.type;return t(e,null,t("slot",null))}static get is(){return"mi-heading"}static get encapsulation(){return"shadow"}static get properties(){return{text:{type:String,attr:"text"},type:{type:String,attr:"type"}}}static get style(){return""}}export{e as MiHeading};

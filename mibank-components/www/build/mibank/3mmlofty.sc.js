@@ -1,2 +1,0 @@
-/*! Built with http://stenciljs.com */
-const{h:t}=window.mibank;class e{render(){return t("div",{class:"section"},t("slot",{name:"header"}),t("slot",null),t("slot",{name:"footer"}))}static get is(){return"mi-section"}static get encapsulation(){return"shadow"}static get style(){return""}}export{e as MiSection};
