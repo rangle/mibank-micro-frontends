@@ -6,7 +6,10 @@ import LineChart from "./components/line-chart";
 import * as components from "mibank-components";
 components.defineCustomElements(window);
 
-export interface InvestmentsProps {}
+export interface InvestmentsProps {
+  data: Array<Array<number>>;
+  headings: Array<string>;
+}
 
 class LineChartData {
   data: Array<Array<number>>;
@@ -32,26 +35,13 @@ class LineChartData {
   }
 }
 
-class App extends React.Component {
+class App extends React.Component<InvestmentsProps, {}, {}> {
   private investments: LineChartData;
   constructor(props) {
     super(props);
     this.investments = new LineChartData();
-    this.investments.headings = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul"
-    ];
-
-    this.investments.data = [
-      Array.from({ length: 7 }, () => Math.floor(Math.random() * 21)),
-      Array.from({ length: 7 }, () => Math.floor(Math.random() * 21)),
-      Array.from({ length: 7 }, () => Math.floor(Math.random() * 21))
-    ];
+    this.investments.headings = props.headings;
+    this.investments.data = props.data;
   }
   public render() {
     return (
