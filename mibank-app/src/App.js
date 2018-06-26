@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "mibank-account-app/dist/mibank-account-app.css";
+import "mibank-investment-app/dist/mibank-investment-app.css";
 import "./App.css";
 import Account from "mibank-account-app";
+import Investments from "mibank-investment-app";
 
 require("mibank-components").defineCustomElements(window);
 
@@ -19,6 +21,14 @@ class App extends Component {
           data={[["Saving", 40], ["Chequing", 50], ["Investments", 50]]}
           backgroundColor={["blue", "green", "red"]}
           labels={["Account", "Balance"]}
+        />
+        <Investments
+          headings={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]}
+          data={[
+            Array.from({ length: 7 }, () => Math.floor(Math.random() * 21)),
+            Array.from({ length: 7 }, () => Math.floor(Math.random() * 21)),
+            Array.from({ length: 7 }, () => Math.floor(Math.random() * 21))
+          ]}
         />
       </div>
     );
