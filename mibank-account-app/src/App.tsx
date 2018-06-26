@@ -46,16 +46,22 @@ class App extends React.Component<AccountProps, State, any> {
     return (
       <div className="App">
         <mi-section>
-          <mi-heading type="h1">{"TEST"}</mi-heading>
-          <Table
-            headings={["Pink", "Blue", "Red"]}
-            data={this.data}
-            onRowSelect={this.updateSelected}
-          />
-          <PieChart
-            dataSet={[{ data, backgroundColor }]}
-            labels={["Pink", "Blue", "Red"]}
-          />
+          <mi-grid>
+            <div slot="header">
+              <mi-heading type="h2">{"Account Balances"}</mi-heading>
+            </div>
+            <Table
+              headings={["Pink", "Blue", "Red"]}
+              data={this.data}
+              onRowSelect={this.updateSelected}
+            />
+            <div slot="sidebar">
+              <PieChart
+                dataSet={[{ data, backgroundColor }]}
+                labels={["Pink", "Blue", "Red"]}
+              />
+            </div>
+          </mi-grid>
         </mi-section>
       </div>
     );

@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 100px 1fr 50px;
+}
+
+.fullwidth {
+  grid-column-start: 1;
+  grid-column-end: 7;
+}
+
+.main {
+  grid-column-start: 1;
+  grid-column-end: 6;
+}

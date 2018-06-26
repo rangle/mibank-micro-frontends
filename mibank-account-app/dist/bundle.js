@@ -107,9 +107,12 @@ var App = /** @class */ (function (_super) {
         var backgroundColor = this.backgroundColor;
         return (React.createElement("div", { className: "App" },
             React.createElement("mi-section", null,
-                React.createElement("mi-heading", { type: "h1" }, "TEST"),
-                React.createElement(Table, { headings: ["Pink", "Blue", "Red"], data: this.data, onRowSelect: this.updateSelected }),
-                React.createElement(PieChart, { dataSet: [{ data: data, backgroundColor: backgroundColor }], labels: ["Pink", "Blue", "Red"] }))));
+                React.createElement("mi-grid", null,
+                    React.createElement("div", { slot: "header" },
+                        React.createElement("mi-heading", { type: "h2" }, "Account Balances")),
+                    React.createElement(Table, { headings: ["Pink", "Blue", "Red"], data: this.data, onRowSelect: this.updateSelected }),
+                    React.createElement("div", { slot: "sidebar" },
+                        React.createElement(PieChart, { dataSet: [{ data: data, backgroundColor: backgroundColor }], labels: ["Pink", "Blue", "Red"] }))))));
     };
     return App;
 }(React.Component));

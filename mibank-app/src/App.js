@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
+import "mibank-account-app/dist/mibank-account-app.css";
 import "./App.css";
 import Account from "mibank-account-app";
 
