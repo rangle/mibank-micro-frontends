@@ -3,17 +3,22 @@ const { h } = window.mibank;
 
 class MiTable {
     constructor() {
+        this.selectedRow = 0;
         this.headings = [];
         this.data = [];
+    }
+    selectRow(e) {
+        this.selectedRow = e.currentTarget.rowIndex - 1;
+        this.rowOnClick(e);
     }
     generateHeader() {
         const row = this.headings.map(item => h("th", null, item));
         return h("tr", null, row);
     }
     generateGrid() {
-        const row = this.data.map(row => {
+        const row = this.data.map((row, i) => {
             const result = row.map(cell => h("td", null, cell));
-            return h("tr", null, result);
+            return (h("tr", { class: this.selectedRow == i ? "selected" : "", onClick: e => this.selectRow(e) }, result));
         });
         return row;
     }
@@ -36,9 +41,20 @@ class MiTable {
         "headings": {
             "type": "Any",
             "attr": "headings"
+        },
+        "ref": {
+            "type": "Any",
+            "attr": "ref"
+        },
+        "rowOnClick": {
+            "type": "Any",
+            "attr": "row-on-click"
+        },
+        "selectedRow": {
+            "state": true
         }
     }; }
-    static get style() { return "table[data-mi-table] {\n  width: 100%;\n}\n\ntable[data-mi-table], th[data-mi-table], td[data-mi-table] {\n  border: 1px solid black;\n  border-collapse: collapse;\n}\n\nth[data-mi-table], td[data-mi-table] {\n  padding: 15px;\n}\n\ntable[data-mi-table]   tr[data-mi-table]:nth-child(even) {\n  background-color: #eee;\n}\ntable[data-mi-table]   tr[data-mi-table]:nth-child(odd) {\n  background-color: #fff;\n}\ntable[data-mi-table]   th[data-mi-table] {\n  color: white;\n  background-color: black;\n}"; }
+    static get style() { return "table[data-mi-table] {\n  width: 100%;\n}\n\ntable[data-mi-table], th[data-mi-table], td[data-mi-table] {\n  border: 1px solid black;\n  border-collapse: collapse;\n}\n\nth[data-mi-table], td[data-mi-table] {\n  padding: 15px;\n}\n\ntable[data-mi-table]   tr[data-mi-table]:nth-child(even) {\n  background-color: #eee;\n}\ntable[data-mi-table]   tr[data-mi-table]:nth-child(odd) {\n  background-color: #fff;\n}\ntable[data-mi-table]   th[data-mi-table] {\n  color: white;\n  background-color: black;\n}\n\ntr.selected[data-mi-table] {\n  border: red 3px solid;\n}"; }
 }
 
 export { MiTable };

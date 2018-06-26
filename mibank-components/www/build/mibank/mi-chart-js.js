@@ -18865,14 +18865,25 @@ class ChartJS {
         this.chart.data.labels.push(label);
         this.chart.update();
     }
+    getDataAtElement(evt) {
+        const point = this.chart.getElementAtEvent(evt)[0];
+        const label = this.chart.data.labels[point._index];
+        const value = this.chart.data.datasets[point._datasetIndex].data[point._index];
+        return { label, value };
+    }
     componentDidLoad() {
         this.drawChart();
+    }
+    updateChart(data) {
+        this.chart.data = data;
+        this.chart.update();
     }
     drawChart() {
         const ctx = this.canvas.getElementsByTagName("canvas")[0].getContext("2d");
         this.chart = new chart_bundle(ctx, {
             type: this.type,
-            data: this.data
+            data: this.data,
+            options: Object.assign({}, this.options)
         });
     }
     render() {
@@ -18891,9 +18902,23 @@ class ChartJS {
             "type": "Any",
             "attr": "data"
         },
+        "getDataAtElement": {
+            "method": true
+        },
+        "options": {
+            "type": "Any",
+            "attr": "options"
+        },
+        "ref": {
+            "type": "Any",
+            "attr": "ref"
+        },
         "type": {
             "type": String,
             "attr": "type"
+        },
+        "updateChart": {
+            "method": true
         }
     }; }
     static get style() { return ".chart {\n  width: 400px;\n  height: 400px;\n}"; }

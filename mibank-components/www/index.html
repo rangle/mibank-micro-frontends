@@ -72,8 +72,12 @@
     table.data = [["ROW 1", "ROW 2"], ["ROW11", "ROW22"]];
 
     var data = { tim: "test" };
-    var chart = document.createElement('mi-pie-graph');
-    chart.data = [{ "data": [20, 20, 30], "backgroundColor": ["red", "yellow", "blue"] }];
+    var chart = document.createElement('mi-chart-js');
+    chart.type = "pie";
+    chart.data = {
+      datasets: [{ "data": [20, 20, 30], "backgroundColor": ["red", "yellow", "blue"] }],
+      labels: ["red", "yellow", "blue"]
+    };
     document.body.appendChild(chart);
   }
 </script>

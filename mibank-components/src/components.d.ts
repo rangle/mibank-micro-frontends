@@ -26,7 +26,11 @@ declare global {
 import {
   ChartData,
   ChartDataSets,
+  ChartOptions,
 } from 'chart.js/dist/chart.bundle.js';
+import {
+  PieSectionData,
+} from './components/mi-chart-js/mi-chart-js';
 import {
   NavigationItem,
 } from './components/mi-navigation/mi-navigation';
@@ -40,7 +44,11 @@ declare global {
     interface MiChartJs {
       'addData': (label: string, data: any) => void;
       'data': ChartData;
+      'getDataAtElement': (evt: any) => PieSectionData;
+      'options': ChartOptions;
+      'ref': any;
       'type': string;
+      'updateChart': (data: any) => void;
     }
   }
 
@@ -64,6 +72,8 @@ declare global {
   namespace JSXElements {
     export interface MiChartJsAttributes extends HTMLAttributes {
       'data'?: ChartData;
+      'options'?: ChartOptions;
+      'ref'?: any;
       'type'?: string;
     }
   }
@@ -213,6 +223,8 @@ declare global {
     interface MiTable {
       'data': Array<any>;
       'headings': Array<string>;
+      'ref': any;
+      'rowOnClick': Function;
     }
   }
 
@@ -237,6 +249,8 @@ declare global {
     export interface MiTableAttributes extends HTMLAttributes {
       'data'?: Array<any>;
       'headings'?: Array<string>;
+      'ref'?: any;
+      'rowOnClick'?: Function;
     }
   }
 }

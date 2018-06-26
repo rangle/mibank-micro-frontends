@@ -2,6 +2,9 @@
 const { h } = window.mibank;
 
 class MiPieGraph {
+    getData() {
+        debugger;
+    }
     render() {
         const data = Object.assign({}, {
             datasets: [],

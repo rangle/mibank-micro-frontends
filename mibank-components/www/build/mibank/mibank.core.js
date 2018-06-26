@@ -47,12 +47,10 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
           // Constructor using the style mode id as the key
                     cmpMeta[styleModeId] = templateElm;
           // add the style text to the template element's innerHTML
-                    // add a style id attribute, but only useful during dev
-          domApi.$setAttribute(templateElm, 'data-tmpl-style-id', styleModeId);
-          templateElm.innerHTML = `<style data-style-id="${styleModeId}">${style}</style>`;
+                    templateElm.innerHTML = `<style>${style}</style>`;
           // add our new template element to the head
           // so it can be cloned later
-          domApi.$appendChild(domApi.$head, templateElm);
+                    domApi.$appendChild(domApi.$head, templateElm);
         }
       }
     }
@@ -246,20 +244,17 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
         }));
       }
     };
+    true;
     domApi.$attachShadow = ((elm, shadowRootInit) => elm.attachShadow(shadowRootInit));
     domApi.$supportsShadowDom = !!domApi.$documentElement.attachShadow;
+    true;
     win.location.search.indexOf('shadow=false') > 0 && (
     // by adding ?shadow=false it'll force the slot polyfill
     // only add this check when in dev mode
     domApi.$supportsShadowDom = false);
     false;
     domApi.$dispatchEvent = ((elm, eventName, data) => elm && elm.dispatchEvent(new win.CustomEvent(eventName, data)));
-    // test if this browser supports event options or not
-    try {
-      win.addEventListener('e', null, Object.defineProperty({}, 'passive', {
-        get: () => domApi.$supportsEventOptions = true
-      }));
-    } catch (e) {}
+    false, false;
     domApi.$parentElement = ((elm, parentNode) => 
     // if the parent node is a document fragment (shadow root)
     // then use the "host" property on it
@@ -340,23 +335,6 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     // so no need to change to a different type
         return propValue;
   }
-  function initEventEmitters(plt, cmpEvents, instance) {
-    if (cmpEvents) {
-      const elm = plt.hostElementMap.get(instance);
-      cmpEvents.forEach(eventMeta => {
-        instance[eventMeta.method] = {
-          emit: data => {
-            plt.emitEvent(elm, eventMeta.name, {
-              bubbles: eventMeta.bubbles,
-              composed: eventMeta.composed,
-              cancelable: eventMeta.cancelable,
-              detail: data
-            });
-          }
-        };
-      });
-    }
-  }
   function proxyComponentInstance(plt, cmpConstructor, elm, instance, hostSnapshot, properties, memberName) {
     // at this point we've got a specific node of a host element, and created a component class instance
     // and we've already created getters/setters on both the host element and component class prototypes
@@ -393,30 +371,8 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       // let's upgrade the data on the host element
       // and let the getters/setters do their jobs
             proxyComponentInstance(plt, componentConstructor, elm, instance, hostSnapshot);
-      // add each of the event emitters which wire up instance methods
-      // to fire off dom events from the host element
-      initEventEmitters(plt, componentConstructor.events, instance);
-      try {
-        // replay any event listeners on the instance that
-        // were queued up between the time the element was
-        // connected and before the instance was ready
-        queuedEvents = plt.queuedEvents.get(elm);
-        if (queuedEvents) {
-          // events may have already fired before the instance was even ready
-          // now that the instance is ready, let's replay all of the events that
-          // we queued up earlier that were originally meant for the instance
-          for (i = 0; i < queuedEvents.length; i += 2) {
-            // data was added in sets of two
-            // first item the eventMethodName
-            // second item is the event data
-            // take a look at initElementListener()
-            instance[queuedEvents[i]](queuedEvents[i + 1]);
-          }
-          plt.queuedEvents.delete(elm);
-        }
-      } catch (e) {
-        plt.onError(e, 2 /* QueueEventsError */ , elm);
-      }
+      false;
+      false;
     } catch (e) {
       // something done went wrong trying to create a component instance
       // create a dumby instance so other stuff can load
@@ -450,6 +406,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
           onReadyCallbacks.forEach(cb => cb(elm));
           plt.onReadyCallbacksMap.delete(elm);
         }
+        true;
         // fire off the user's componentDidLoad method (if one was provided)
         // componentDidLoad only runs ONCE, after the instance's element has been
         // assigned as the host element, and AFTER render() has been called
@@ -563,20 +520,14 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     'getAttributes': vnode => vnode.vattrs,
     'replaceAttributes': (vnode, attributes) => vnode.vattrs = attributes
   };
-  function render(plt, cmpMeta, hostElm, instance) {
+  function render(plt, cmpMeta, elm, instance, isUpdateRender) {
     try {
       // if this component has a render function, let's fire
       // it off and generate the child vnodes for this host element
       // note that we do not create the host element cuz it already exists
       const hostMeta = cmpMeta.componentConstructor.host;
-      const encapsulation = cmpMeta.componentConstructor.encapsulation;
-      // test if this component should be shadow dom
-      // and if so does the browser supports it
-            const useNativeShadowDom = 'shadow' === encapsulation && plt.domApi.$supportsShadowDom;
       let reflectHostAttr;
-      let rootElm;
-      reflectHostAttr = reflectInstanceValuesToHostAttributes(cmpMeta.componentConstructor.properties, instance);
-      rootElm = useNativeShadowDom ? hostElm.shadowRoot : hostElm;
+      false;
       if (instance.render || instance.hostData || hostMeta || reflectHostAttr) {
         // tell the platform we're actively rendering
         // if a value is changed within a render() then
@@ -584,89 +535,46 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
         plt.activeRender = true;
         const vnodeChildren = instance.render && instance.render();
         let vnodeHostData;
-        // user component provided a "hostData()" method
-        // the returned data/attributes are used on the host element
-        vnodeHostData = instance.hostData && instance.hostData();
-        reflectHostAttr && (vnodeHostData = vnodeHostData ? Object.assign(vnodeHostData, reflectHostAttr) : reflectHostAttr);
+        false;
+        false;
         // tell the platform we're done rendering
         // now any changes will again queue
-                plt.activeRender = false;
-        hostMeta && (
-        // component meta data has a "theme"
-        // use this to automatically generate a good css class
-        // from the mode and color to add to the host element
-        vnodeHostData = applyComponentHostData(vnodeHostData, hostMeta, instance));
+        plt.activeRender = false;
+        false;
         // looks like we've got child nodes to render into this host element
         // or we need to update the css class/attrs on the host element
         // if we haven't already created a vnode, then we give the renderer the actual element
         // if this is a re-render, then give the renderer the last vnode we already created
-                const oldVNode = plt.vnodeMap.get(hostElm) || {};
-        oldVNode.elm = rootElm;
+        const oldVNode = plt.vnodeMap.get(elm) || {};
+        oldVNode.elm = elm;
         const hostVNode = h(null, vnodeHostData, vnodeChildren);
-        // only care if we're reflecting values to the host element
-        hostVNode.ishost = true;
+        false;
         // each patch always gets a new vnode
         // the host element itself isn't patched because it already exists
         // kick off the actual render and any DOM updates
-        plt.vnodeMap.set(hostElm, plt.render(hostElm, oldVNode, hostVNode, useNativeShadowDom, encapsulation));
+        plt.vnodeMap.set(elm, plt.render(oldVNode, hostVNode, isUpdateRender, cmpMeta.componentConstructor.encapsulation));
       }
+      true;
       // attach the styles this component needs, if any
       // this fn figures out if the styles should go in a
       // shadow root or if they should be global
-      plt.attachStyles(plt, plt.domApi, cmpMeta, instance.mode, hostElm);
+      plt.attachStyles(plt, plt.domApi, cmpMeta, instance.mode, elm);
       // it's official, this element has rendered
-      hostElm['s-rn'] = true;
-      hostElm.$onRender && (
+      elm['s-rn'] = true;
+      elm.$onRender && (
       // $onRender deprecated 2018-04-02
-      hostElm['s-rc'] = hostElm.$onRender);
-      if (hostElm['s-rc']) {
+      elm['s-rc'] = elm.$onRender);
+      if (elm['s-rc']) {
         // ok, so turns out there are some child host elements
         // waiting on this parent element to load
         // let's fire off all update callbacks waiting
-        hostElm['s-rc'].forEach(cb => cb());
-        hostElm['s-rc'] = null;
+        elm['s-rc'].forEach(cb => cb());
+        elm['s-rc'] = null;
       }
     } catch (e) {
       plt.activeRender = false;
-      plt.onError(e, 8 /* RenderError */ , hostElm, true);
+      plt.onError(e, 8 /* RenderError */ , elm, true);
     }
-  }
-  function applyComponentHostData(vnodeHostData, hostMeta, instance) {
-    vnodeHostData = vnodeHostData || {};
-    // component meta data has a "theme"
-    // use this to automatically generate a good css class
-    // from the mode and color to add to the host element
-        Object.keys(hostMeta).forEach(key => {
-      'theme' === key ? 
-      // host: { theme: 'button' }
-      // adds css classes w/ mode and color combinations
-      // class="button button-md button-primary button-md-primary"
-      convertCssNamesToObj(vnodeHostData.class = vnodeHostData.class || {}, hostMeta[key], instance.mode, instance.color) : 'class' === key ? 
-      // host: { class: 'multiple css-classes' }
-      // class="multiple css-classes"
-      convertCssNamesToObj(vnodeHostData[key] = vnodeHostData[key] || {}, hostMeta[key]) : 
-      // rando attribute/properties
-      vnodeHostData[key] = hostMeta[key];
-    });
-    return vnodeHostData;
-  }
-  function convertCssNamesToObj(cssClassObj, className, mode, color) {
-    className.split(' ').forEach(cssClass => {
-      cssClassObj[cssClass] = true;
-      if (mode) {
-        cssClassObj[`${cssClass}-${mode}`] = true;
-        color && (cssClassObj[`${cssClass}-${mode}-${color}`] = cssClassObj[`${cssClass}-${color}`] = true);
-      }
-    });
-  }
-  function reflectInstanceValuesToHostAttributes(properties, instance, reflectHostAttr) {
-    properties && Object.keys(properties).forEach(memberName => {
-      if (properties[memberName].reflectToAttr) {
-        reflectHostAttr = reflectHostAttr || {};
-        reflectHostAttr[memberName] = instance[memberName];
-      }
-    });
-    return reflectHostAttr;
   }
   function queueUpdate(plt, elm) {
     // only run patch if it isn't queued already
@@ -715,25 +623,9 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
         // create the instance from the user's component class
         // https://www.youtube.com/watch?v=olLxrojmvMg
                 instance = initComponentInstance(plt, elm, plt.hostSnapshotMap.get(elm));
-        // fire off the user's componentWillLoad method (if one was provided)
-        // componentWillLoad only runs ONCE, after instance's element has been
-        // assigned as the host element, but BEFORE render() has been called
-        try {
-          instance.componentWillLoad && (userPromise = instance.componentWillLoad());
-        } catch (e) {
-          plt.onError(e, 3 /* WillLoadError */ , elm);
-        }
+        false;
       } else {
-        // already created an instance and this is an update
-        // fire off the user's componentWillUpdate method (if one was provided)
-        // componentWillUpdate runs BEFORE render() has been called
-        // but only BEFORE an UPDATE and not before the intial render
-        // get the returned promise (if one was provided)
-        try {
-          instance.componentWillUpdate && (userPromise = instance.componentWillUpdate());
-        } catch (e) {
-          plt.onError(e, 5 /* WillUpdateError */ , elm);
-        }
+        false;
       }
       userPromise && userPromise.then ? 
       // looks like the user return a promise!
@@ -748,17 +640,14 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
   function renderUpdate(plt, elm, instance, isInitialLoad) {
     // if this component has a render function, let's fire
     // it off and generate a vnode for this
-    render(plt, plt.getComponentMeta(elm), elm, instance);
+    render(plt, plt.getComponentMeta(elm), elm, instance, !isInitialLoad);
     try {
       if (isInitialLoad) {
         // so this was the initial load i guess
         elm['s-init']();
         // componentDidLoad just fired off
             } else {
-        // fire off the user's componentDidUpdate method (if one was provided)
-        // componentDidUpdate runs AFTER render() has been called
-        // but only AFTER an UPDATE and not after the intial render
-        instance.componentDidUpdate && instance.componentDidUpdate();
+        false;
         callNodeRefs(plt.vnodeMap.get(elm));
       }
     } catch (e) {
@@ -776,7 +665,14 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     function setComponentProp(newValue, elm) {
       // component instance prop/state setter (cannot be arrow fn)
       elm = plt.hostElementMap.get(this);
-      elm && (property.state || property.mutable ? setValue(plt, elm, memberName, newValue) : console.warn(`@Prop() "${memberName}" on "${elm.tagName}" cannot be modified.`));
+      if (elm) {
+        if (property.state || property.mutable) {
+          setValue(plt, elm, memberName, newValue);
+        } else {
+          true;
+          console.warn(`@Prop() "${memberName}" on "${elm.tagName}" cannot be modified.`);
+        }
+      }
     }
     if (property.type || property.state) {
       const values = plt.valuesMap.get(elm);
@@ -816,24 +712,19 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       // add getter/setter to the component instance
       // these will be pointed to the internal data set from the above checks
             definePropertyGetterSetter(instance, memberName, getComponentProp, setComponentProp);
-    } else if (property.elementRef) {
+    } else if (true, property.elementRef) {
       // @Element()
       // add a getter to the element reference using
       // the member name the component meta provided
       definePropertyValue(instance, memberName, elm);
-    } else if (property.method) {
+    } else if (true, property.method) {
       // @Method()
       // add a property "value" on the host element
       // which we'll bind to the instance's method
       definePropertyValue(elm, memberName, instance[memberName].bind(instance));
-    } else if (property.context) {
-      // @Prop({ context: 'config' })
-      const contextObj = plt.getContextItem(property.context);
-      void 0 !== contextObj && definePropertyValue(instance, memberName, contextObj.getContext && contextObj.getContext(elm) || contextObj);
     } else {
-      property.connect && 
-      // @Prop({ connect: 'ion-loading-ctrl' })
-      definePropertyValue(instance, memberName, plt.propConnect(property.connect));
+      false;
+      false;
     }
   }
   function setValue(plt, elm, memberName, newVal, values, instance, watchMethods) {
@@ -851,18 +742,8 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       instance = plt.instanceMap.get(elm);
       if (instance) {
         // get an array of method names of watch functions to call
-        watchMethods = values[WATCH_CB_PREFIX + memberName];
-        if (watchMethods) {
-          // this instance is watching for when this property changed
-          for (let i = 0; i < watchMethods.length; i++) {
-            try {
-              // fire off each of the watch methods that are watching this property
-              instance[watchMethods[i]].call(instance, newVal, oldVal, memberName);
-            } catch (e) {
-              console.error(e);
-            }
-          }
-        }
+        values[WATCH_CB_PREFIX + memberName];
+        false;
         !plt.activeRender && elm['s-rn'] && 
         // looks like this value actually changed, so we've got work to do!
         // but only if we've already rendered, otherwise just chill out
@@ -942,9 +823,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
             // let's set the known @Prop on this element
             // set it directly as property on the element
             setProperty(elm, memberName, newValue);
-            isHostElement && cmpMeta.membersMeta[memberName].reflectToAttrib && 
-            // we also want to set this data to the attribute
-            updateAttribute(elm, cmpMeta.membersMeta[memberName].attribName, newValue, 3 /* Boolean */ === cmpMeta.membersMeta[memberName].propType, null == newValue);
+            false;
           } else if ('ref' !== memberName) {
             // this member name is a property on this element, but it's not a component
             // this is a native property like "value" or something
@@ -953,7 +832,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
             null != newValue && false !== newValue || elm.removeAttribute(memberName);
           }
         } else {
-          null != newValue && 'key' !== memberName ? 
+          null != newValue ? 
           // Element Attributes
           updateAttribute(elm, memberName, newValue) : !isSvg || null != newValue && false !== newValue || 
           // remove svg attribute
@@ -1021,7 +900,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     // which gets called numerous times by each component
     function createElm(oldParentVNode, newParentVNode, childIndex, parentElm, i, elm, childNode, newVNode, oldVNode) {
       newVNode = newParentVNode.vchildren[childIndex];
-      if (!useNativeShadowDom) {
+      if (true, !useNativeShadowDom) {
         // remember for later we need to check to relocate nodes
         checkSlotRelocate = true;
         if ('slot' === newVNode.vtag) {
@@ -1041,12 +920,14 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       if (isDef(newVNode.vtext)) {
         // create text node
         newVNode.elm = domApi.$createTextNode(newVNode.vtext);
-      } else if (newVNode.isSlotReference) {
+      } else if (true, newVNode.isSlotReference) {
         // create a slot reference html text node
         newVNode.elm = domApi.$createTextNode('');
       } else {
         // create element
-        elm = newVNode.elm = isSvgMode || 'svg' === newVNode.vtag ? domApi.$createElementNS('http://www.w3.org/2000/svg', newVNode.vtag) : domApi.$createElement(newVNode.isSlotFallback ? 'slot-fb' : newVNode.vtag);
+        elm = newVNode.elm = (true, isSvgMode || 'svg' === newVNode.vtag ? domApi.$createElementNS('http://www.w3.org/2000/svg', newVNode.vtag) : domApi.$createElement((true, 
+        newVNode.isSlotFallback ? 'slot-fb' : newVNode.vtag)));
+        true;
         isSvgMode = 'svg' === newVNode.vtag || 'foreignObject' !== newVNode.vtag && isSvgMode;
         // add css classes, attrs, props, listeners, etc.
         updateElement(plt, null, newVNode, isSvgMode);
@@ -1054,34 +935,25 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
         // if there is a scopeId and this is the initial render
         // then let's add the scopeId as an attribute
         domApi.$setAttribute(elm, elm['s-si'] = scopeId, '');
-        isDef(ssrId) && 
-        // SSR ONLY: this is an SSR render and this
-        // logic does not run on the client
-        // give this element the SSR child id that can be read by the client
-        domApi.$setAttribute(elm, SSR_CHILD_ID, ssrId + '.' + childIndex + (hasChildNodes(newVNode.vchildren) ? '' : '.'));
+        false;
         if (newVNode.vchildren) {
           for (i = 0; i < newVNode.vchildren.length; ++i) {
             // create the node
             childNode = createElm(oldParentVNode, newVNode, i, elm);
             // return node could have been null
                         if (childNode) {
-              isDef(ssrId) && 3 /* TextNode */ === childNode.nodeType && !childNode['s-cr'] && 
-              // SSR ONLY: add the text node's start comment
-              domApi.$appendChild(elm, domApi.$createComment('s.' + ssrId + '.' + i));
+              false;
               // append our new node
-                            domApi.$appendChild(elm, childNode);
-              if (isDef(ssrId) && 3 /* TextNode */ === childNode.nodeType && !childNode['s-cr']) {
-                // SSR ONLY: add the text node's end comment
-                domApi.$appendChild(elm, domApi.$createComment('/'));
-                domApi.$appendChild(elm, domApi.$createTextNode(' '));
-              }
+              domApi.$appendChild(elm, childNode);
+              false;
             }
           }
         }
-        'svg' === newVNode.vtag && (
+        (true, 'svg' === newVNode.vtag) && (
         // Only reset the SVG context when we're exiting SVG element
         isSvgMode = false);
       }
+      true;
       newVNode.elm['s-hn'] = hostTagName;
       if (newVNode.isSlotFallback || newVNode.isSlotReference) {
         // remember the content reference comment
@@ -1140,6 +1012,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       for (;startIdx <= endIdx; ++startIdx) {
         if (isDef(vnodes[startIdx])) {
           node = vnodes[startIdx].elm;
+          true;
           // we're removing this element
           // so it's possible we need to show slot fallback content now
           checkSlotFallbackVisibility = true;
@@ -1227,6 +1100,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       // compare if two vnode to see if they're "technically" the same
       // need to have the same element tag, and same key to be the same
       if (vnode1.vtag === vnode2.vtag && vnode1.vkey === vnode2.vkey) {
+        true;
         if ('slot' === vnode1.vtag) {
           return vnode1.vname === vnode2.vname;
         }
@@ -1235,6 +1109,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       return false;
     }
     function referenceNode(node) {
+      true;
       if (node && node['s-ol']) {
         // this node was relocated to a new location in the dom
         // because of some other component's slot
@@ -1251,12 +1126,13 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       const elm = newVNode.elm = oldVNode.elm;
       const oldChildren = oldVNode.vchildren;
       const newChildren = newVNode.vchildren;
+      true;
       // test if we're rendering an svg element, or still rendering nodes inside of one
       // only add this to the when the compiler sees we're using an svg somewhere
       isSvgMode = newVNode.elm && isDef(domApi.$parentElement(newVNode.elm)) && void 0 !== newVNode.elm.ownerSVGElement;
       isSvgMode = 'svg' === newVNode.vtag || 'foreignObject' !== newVNode.vtag && isSvgMode;
       if (isDef(newVNode.vtext)) {
-        (defaultHolder = elm['s-cr'] || elm.$defaultHolder /* $defaultHolder deprecated 2018-04-02 */) ? 
+        true, (defaultHolder = elm['s-cr'] || elm.$defaultHolder /* $defaultHolder deprecated 2018-04-02 */) ? 
         // this element has slotted content
         domApi.$setTextContent(domApi.$parentNode(defaultHolder), newVNode.vtext) : oldVNode.vtext !== newVNode.vtext && 
         // update the text content for the text only vnode
@@ -1285,6 +1161,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
           removeVnodes(oldChildren, 0, oldChildren.length - 1);
         }
       }
+      true;
       // reset svgMode when svg node is fully patched
       isSvgMode && 'svg' === newVNode.vtag && (isSvgMode = false);
     }
@@ -1362,25 +1239,39 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       }
     }
     // internal variables to be reused per patch() call
-        let useNativeShadowDom, ssrId, scopeId, checkSlotFallbackVisibility, checkSlotRelocate, hostTagName, contentRef;
-    return function patch(hostElm, oldVNode, newVNode, useNativeShadowDomVal, encapsulation, ssrPatchId, i, relocateNode, orgLocationNode, refNode, parentNodeRef, insertBeforeNode) {
+        let useNativeShadowDom, scopeId, isUpdate, checkSlotFallbackVisibility, checkSlotRelocate, hostTagName, contentRef;
+    return function patch(oldVNode, newVNode, isUpdatePatch, encapsulation, ssrPatchId, i, relocateNode, orgLocationNode, refNode) {
       // patchVNode() is synchronous
       // so it is safe to set these variables and internally
       // the same patch() call will reference the same data
-      hostTagName = domApi.$tagName(hostElm);
-      contentRef = hostElm['s-cr'];
-      useNativeShadowDom = useNativeShadowDomVal;
-      ssrId = 'shadow' !== encapsulation ? ssrPatchId : null;
+      isUpdate = isUpdatePatch;
+      hostTagName = domApi.$tagName(oldVNode.elm);
+      contentRef = oldVNode.elm['s-cr'];
+      false;
+      true;
       // get the scopeId
-      scopeId = hostElm['s-sc'];
+      scopeId = 'scoped' === encapsulation || 'shadow' === encapsulation && !domApi.$supportsShadowDom ? 'data-' + domApi.$tagName(oldVNode.elm) : null;
       // always reset
             checkSlotRelocate = checkSlotFallbackVisibility = false;
+      true;
+      // use native shadow dom only if the component wants to use it
+      // and if this browser supports native shadow dom
+      useNativeShadowDom = 'shadow' === encapsulation && domApi.$supportsShadowDom;
+      isUpdate || (true, useNativeShadowDom ? 
+      // this component SHOULD use native slot/shadow dom
+      // this browser DOES support native shadow dom
+      // and this is the first render
+      // let's create that shadow root
+      oldVNode.elm = domApi.$attachShadow(oldVNode.elm, {
+        mode: 'open'
+      }) : (true, scopeId) && 
+      // this host element should use scoped css
+      // add the scope attribute to the host
+      domApi.$setAttribute(oldVNode.elm, scopeId + '-host', ''));
       // synchronous patch
-      patchVNode(oldVNode, newVNode);
-      isDef(ssrId) && 
-      // SSR ONLY: we've been given an SSR id, so the host element
-      // should be given the ssr id attribute
-      domApi.$setAttribute(oldVNode.elm, SSR_VNODE_ID, ssrId);
+            patchVNode(oldVNode, newVNode);
+      false;
+      true;
       if (checkSlotRelocate) {
         relocateSlotContent(newVNode.elm);
         for (i = 0; i < relocateNodes.length; i++) {
@@ -1400,12 +1291,13 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
           relocateNode = relocateNodes[i];
           // by default we're just going to insert it directly
           // after the slot reference node
-                    parentNodeRef = domApi.$parentNode(relocateNode.slotRefNode);
-          insertBeforeNode = domApi.$nextSibling(relocateNode.slotRefNode);
+                    const parentNodeRef = domApi.$parentNode(relocateNode.slotRefNode);
+          let insertBeforeNode = domApi.$nextSibling(relocateNode.slotRefNode);
           orgLocationNode = relocateNode.nodeToRelocate['s-ol'];
           while (orgLocationNode = domApi.$previousSibling(orgLocationNode)) {
-            if ((refNode = orgLocationNode['s-nr']) && refNode && refNode['s-sn'] === relocateNode.nodeToRelocate['s-sn'] && parentNodeRef === domApi.$parentNode(refNode) && (refNode = domApi.$nextSibling(refNode)) && refNode && !refNode['s-nr']) {
-              insertBeforeNode = refNode;
+            refNode = orgLocationNode['s-nr'];
+            if (refNode && refNode['s-sn'] === relocateNode.nodeToRelocate['s-sn'] && parentNodeRef === domApi.$parentNode(refNode)) {
+              insertBeforeNode = domApi.$nextSibling(refNode);
               break;
             }
           }
@@ -1434,19 +1326,6 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
         callNodeRefs(vChild, isDestroy);
       });
     }
-  }
-  function hasChildNodes(children) {
-    // SSR ONLY: check if there are any more nested child elements
-    // if there aren't, this info is useful so the client runtime
-    // doesn't have to climb down and check so many elements
-    if (children) {
-      for (var i = 0; i < children.length; i++) {
-        if ('slot' !== children[i].vtag || hasChildNodes(children[i].vchildren)) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
   function createVNodesFromSsr(plt, domApi, rootElm) {
     const allSsrElms = rootElm.querySelectorAll(`[${SSR_VNODE_ID}]`);
@@ -1591,64 +1470,6 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       }
     };
   }
-  function initElementListeners(plt, elm) {
-    // so the element was just connected, which means it's in the DOM
-    // however, the component instance hasn't been created yet
-    // but what if an event it should be listening to get emitted right now??
-    // let's add our listeners right now to our element, and if it happens
-    // to receive events between now and the instance being created let's
-    // queue up all of the event data and fire it off on the instance when it's ready
-    const cmpMeta = plt.getComponentMeta(elm);
-    cmpMeta.listenersMeta && 
-    // we've got listens
-    cmpMeta.listenersMeta.forEach(listenMeta => {
-      // go through each listener
-      listenMeta.eventDisabled || 
-      // only add ones that are not already disabled
-      plt.domApi.$addEventListener(elm, listenMeta.eventName, createListenerCallback(plt, elm, listenMeta.eventMethodName), listenMeta.eventCapture, listenMeta.eventPassive);
-    });
-  }
-  function createListenerCallback(plt, elm, eventMethodName, val) {
-    // create the function that gets called when the element receives
-    // an event which it should be listening for
-    return ev => {
-      // get the instance if it exists
-      val = plt.instanceMap.get(elm);
-      if (val) {
-        // instance is ready, let's call it's member method for this event
-        val[eventMethodName](ev);
-      } else {
-        // instance is not ready!!
-        // let's queue up this event data and replay it later
-        // when the instance is ready
-        val = plt.queuedEvents.get(elm) || [];
-        val.push(eventMethodName, ev);
-        plt.queuedEvents.set(elm, val);
-      }
-    };
-  }
-  function enableEventListener(plt, instance, eventName, shouldEnable, attachTo, passive) {
-    if (instance) {
-      // cool, we've got an instance, it's get the element it's on
-      const elm = plt.hostElementMap.get(instance);
-      const cmpMeta = plt.getComponentMeta(elm);
-      if (cmpMeta && cmpMeta.listenersMeta) {
-        // alrighty, so this cmp has listener meta
-        if (shouldEnable) {
-          // we want to enable this event
-          // find which listen meta we're talking about
-          const listenMeta = cmpMeta.listenersMeta.find(l => l.eventName === eventName);
-          listenMeta && 
-          // found the listen meta, so let's add the listener
-          plt.domApi.$addEventListener(elm, eventName, ev => instance[listenMeta.eventMethodName](ev), listenMeta.eventCapture, void 0 === passive ? listenMeta.eventPassive : !!passive, attachTo);
-        } else {
-          // we're disabling the event listener
-          // so let's just remove it entirely
-          plt.domApi.$removeEventListener(elm, eventName);
-        }
-      }
-    }
-  }
   function generateDevInspector(App, namespace, win, plt) {
     const devInspector = win.devInspector = win.devInspector || {};
     devInspector.apps = devInspector.apps || [];
@@ -1779,59 +1600,25 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
   function getComponentInstance(plt, elm) {
     return Promise.resolve(plt.instanceMap.get(elm));
   }
-  function initCoreComponentOnReady(plt, App, win, apps, queuedComponentOnReadys, i) {
-    // add componentOnReady() to the App object
-    // this also is used to know that the App's core is ready
+  function initCoreComponentOnReady(plt, App) {
+    // create the function the HTMLElement.prototype.componentOnReady will end up calling
     App.componentOnReady = ((elm, resolve) => {
-      if (!elm.nodeName.includes('-')) {
-        resolve(null);
-        return false;
+      if (plt.getComponentMeta(elm) && !plt.hasLoadedMap.has(elm)) {
+        // this is a known component and the
+        // host element hasn't finished loading yet
+        const onReadyCallbacks = plt.onReadyCallbacksMap.get(elm) || [];
+        onReadyCallbacks.push(resolve);
+        plt.onReadyCallbacksMap.set(elm, onReadyCallbacks);
+      } else {
+        // either the host element has already loaded
+        // or it's not even a component
+        resolve(elm);
       }
-      const cmpMeta = plt.getComponentMeta(elm);
-      if (cmpMeta) {
-        if (plt.hasLoadedMap.has(elm)) {
-          // element has already loaded, pass the resolve the element component
-          // so we know that the resolve knows it this element is an app component
-          resolve(elm);
-        } else {
-          // element hasn't loaded yet
-          // add this resolve specifically to this elements on ready queue
-          const onReadyCallbacks = plt.onReadyCallbacksMap.get(elm) || [];
-          onReadyCallbacks.push(resolve);
-          plt.onReadyCallbacksMap.set(elm, onReadyCallbacks);
-        }
-      }
-      // return a boolean if this app recognized this element or not
-            return !!cmpMeta;
     });
-    if (queuedComponentOnReadys) {
-      // we've got some componentOnReadys in the queue before the app was ready
-      for (i = queuedComponentOnReadys.length - 1; i >= 0; i--) {
-        // go through each element and see if this app recongizes it
-        App.componentOnReady(queuedComponentOnReadys[i][0], queuedComponentOnReadys[i][1]) && 
-        // turns out this element belongs to this app
-        // remove the resolve from the queue so in the end
-        // all that's left in the queue are elements not apart of any apps
-        queuedComponentOnReadys.splice(i, 1);
-      }
-      for (i = 0; i < apps.length; i++) {
-        if (!win[apps[i]].componentOnReady) {
-          // there is at least 1 apps that isn't ready yet
-          // so let's stop here cuz there's still app cores loading
-          return;
-        }
-      }
-      // if we got to this point then that means all of the apps are ready
-      // and they would have removed any of their elements from queuedComponentOnReadys
-      // so let's do the cleanup of the  remaining queuedComponentOnReadys
-            for (i = 0; i < queuedComponentOnReadys.length; i++) {
-        // resolve any queued componentsOnReadys that are left over
-        // since these elements were not apart of any apps
-        // call the resolve fn, but pass null so it's know this wasn't a known app component
-        queuedComponentOnReadys[i][1](null);
-      }
-      queuedComponentOnReadys.length = 0;
-    }
+    // drain the queue that could have been filled up before the core fully loaded
+        App.$r && App.$r.forEach(r => App.componentOnReady(r[0], r[1]));
+    // remove the queue now that the core file has initialized
+        App.$r = null;
   }
   function attributeChangedCallback(membersMeta, elm, attribName, oldVal, newVal, propName, memberMeta) {
     // only react if the attribute values actually changed
@@ -1850,64 +1637,49 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       }
     }
   }
-  function initHostSnapshot(domApi, cmpMeta, hostElm, hostSnapshot, attribName) {
-    // if the slot polyfill is required we'll need to put some nodes
-    // in here to act as original content anchors as we move nodes around
+  function useShadowDom(supportsNativeShadowDom, cmpMeta) {
+    return supportsNativeShadowDom && 1 /* ShadowDom */ === cmpMeta.encapsulation;
+  }
+  function useScopedCss(supportsNativeShadowDom, cmpMeta) {
+    if (2 /* ScopedCss */ === cmpMeta.encapsulation) {
+      return true;
+    }
+    if (1 /* ShadowDom */ === cmpMeta.encapsulation && !supportsNativeShadowDom) {
+      return true;
+    }
+    return false;
+  }
+  function initHostSnapshot(domApi, cmpMeta, elm, hostSnapshot, attribName) {
+    true;
     // host element has been connected to the DOM
-    if (!hostElm['s-cr'] && !domApi.$getAttribute(hostElm, SSR_VNODE_ID) && (!domApi.$supportsShadowDom || 1 /* ShadowDom */ !== cmpMeta.encapsulation)) {
+    if (!elm['s-cr'] && !domApi.$getAttribute(elm, SSR_VNODE_ID) && !useShadowDom(domApi.$supportsShadowDom, cmpMeta)) {
       // only required when we're NOT using native shadow dom (slot)
-      // or this browser doesn't support native shadow dom
-      // and this host element was NOT created with SSR
+      // this host element was NOT created with SSR
       // let's pick out the inner content for slot projection
       // create a node to represent where the original
       // content was first placed, which is useful later on
-      hostElm['s-cr'] = domApi.$createTextNode('');
-      hostElm['s-cr']['s-cn'] = true;
-      domApi.$insertBefore(hostElm, hostElm['s-cr'], domApi.$childNodes(hostElm)[0]);
+      elm['s-cr'] = domApi.$createTextNode('');
+      elm['s-cr']['s-cn'] = true;
+      domApi.$insertBefore(elm, elm['s-cr'], domApi.$childNodes(elm)[0]);
     }
     if (!domApi.$supportsShadowDom && 1 /* ShadowDom */ === cmpMeta.encapsulation) {
-      true;
+      true, true;
       // it's possible we're manually forcing the slot polyfill
       // but this browser may already support the read-only shadowRoot
       // do an extra check here, but only for dev mode on the client
-      'shadowRoot' in HTMLElement.prototype || (hostElm.shadowRoot = hostElm);
+      'shadowRoot' in HTMLElement.prototype || (elm.shadowRoot = elm);
     }
-    (2 /* ScopedCss */ === cmpMeta.encapsulation || 1 /* ShadowDom */ === cmpMeta.encapsulation && !domApi.$supportsShadowDom) && 
-    // either this host element should use scoped css
-    // or it wants to use shadow dom but the browser doesn't support it
-    // create a scope id which is useful for scoped css
-    // and add the scope attribute to the host
-    domApi.$setAttribute(hostElm, (hostElm['s-sc'] = 'data-' + cmpMeta.tagNameMeta) + '-host', '');
-    if (1 /* ShadowDom */ === cmpMeta.encapsulation && domApi.$supportsShadowDom) {
-      hostElm.shadowRoot && console.error(`shadowRoot already attached to: ${cmpMeta.tagNameMeta}`);
-      domApi.$attachShadow(hostElm, {
-        mode: 'open'
-      });
-    }
-    // create a host snapshot object we'll
-    // use to store all host data about to be read later
     hostSnapshot = {
-      $id: hostElm['s-id'],
+      $id: elm['s-id'],
       $attributes: {}
     };
-    // loop through and gather up all the original attributes on the host
-    // this is useful later when we're creating the component instance
-        cmpMeta.membersMeta && Object.keys(cmpMeta.membersMeta).forEach(memberName => {
-      (attribName = cmpMeta.membersMeta[memberName].attribName) && (hostSnapshot.$attributes[attribName] = domApi.$getAttribute(hostElm, attribName));
+    cmpMeta.membersMeta && Object.keys(cmpMeta.membersMeta).forEach(memberName => {
+      (attribName = cmpMeta.membersMeta[memberName].attribName) && (hostSnapshot.$attributes[attribName] = domApi.$getAttribute(elm, attribName));
     });
     return hostSnapshot;
   }
   function connectedCallback(plt, cmpMeta, elm) {
-    // initialize our event listeners on the host element
-    // we do this now so that we can listening to events that may
-    // have fired even before the instance is ready
-    if (!plt.hasListenersMap.has(elm)) {
-      // it's possible we've already connected
-      // then disconnected
-      // and the same element is reconnected again
-      plt.hasListenersMap.set(elm, true);
-      initElementListeners(plt, elm);
-    }
+    false;
     // this element just connected, which may be re-connecting
     // ensure we remove it from our map of disconnected
     plt.isDisconnectedMap.delete(elm);
@@ -1975,12 +1747,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       // remove all of this element's event, which is good
             plt.domApi.$removeEventListener(elm);
       plt.hasListenersMap.delete(elm);
-      // call instance componentDidUnload
-      // if we've created an instance for this
-      instance = plt.instanceMap.get(elm);
-      instance && 
-      // call the user's componentDidUnload if there is one
-      instance.componentDidUnload && instance.componentDidUnload();
+      false;
       // clear any references to other elements
       // more than likely we've already deleted these references
       // but let's double check there pal
@@ -2025,6 +1792,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       // coolsville, our host element has just hit the DOM
       connectedCallback(plt, cmpMeta, this);
     };
+    true;
     HostElementConstructor.attributeChangedCallback = function(attribName, oldVal, newVal) {
       // the browser has just informed us that an attribute
       // on the host element has changed
@@ -2058,13 +1826,15 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     };
   }
   function loadComponent(domApi, controllerComponents, ctrlTag) {
-    let ctrlElm = controllerComponents[ctrlTag];
-    ctrlElm || (ctrlElm = domApi.$body.querySelector(ctrlTag));
-    if (!ctrlElm) {
-      ctrlElm = controllerComponents[ctrlTag] = domApi.$createElement(ctrlTag);
-      domApi.$appendChild(domApi.$body, ctrlElm);
-    }
-    return ctrlElm.componentOnReady();
+    return new Promise(resolve => {
+      let ctrlElm = controllerComponents[ctrlTag];
+      ctrlElm || (ctrlElm = domApi.$body.querySelector(ctrlTag));
+      if (!ctrlElm) {
+        ctrlElm = controllerComponents[ctrlTag] = domApi.$createElement(ctrlTag);
+        domApi.$appendChild(domApi.$body, ctrlElm);
+      }
+      ctrlElm.componentOnReady(resolve);
+    });
   }
   function createPlatformMain(namespace, Context, win, doc, resourcesUrl, hydratedCssClass, customStyle) {
     const cmpRegistry = {
@@ -2079,14 +1849,13 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     Context.location = win.location;
     Context.document = doc;
     Context.resourcesUrl = Context.publicPath = resourcesUrl;
-    Context.enableListener = ((instance, eventName, enabled, attachTo, passive) => enableEventListener(plt, instance, eventName, enabled, attachTo, passive));
-    Context.emit = ((elm, eventName, data) => domApi.$dispatchEvent(elm, Context.eventNameFn ? Context.eventNameFn(eventName) : eventName, data));
+    false;
+    false;
     // add the h() fn to the app's global namespace
     App.h = h;
     App.Context = Context;
     // keep a global set of tags we've already defined
-    // DEPRECATED $definedCmps 2018-05-22
-        const globalDefined = win['s-defined'] = win.$definedCmps = win['s-defined'] || win.$definedCmps || {};
+        const globalDefined = win.$definedCmps = win.$definedCmps || {};
     // internal id increment for unique ids
         let ids = 0;
     // create the platform api which is used throughout common core code
@@ -2138,13 +1907,16 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
     // if the HTML was generated from SSR
     // then let's walk the tree and generate vnodes out of the data
     createVNodesFromSsr(plt, domApi, rootElm);
-    customStyle && customStyle.init();
+    false;
     function defineComponent(cmpMeta, HostElementConstructor) {
-      if (!win.customElements.get(cmpMeta.tagNameMeta)) {
+      if (!globalDefined[cmpMeta.tagNameMeta]) {
+        // keep a map of all the defined components
+        globalDefined[cmpMeta.tagNameMeta] = true;
         // define the custom element
         // initialize the members on the host element prototype
         // keep a ref to the metadata with the tag as the key
-        initHostElement(plt, cmpRegistry[cmpMeta.tagNameMeta] = cmpMeta, HostElementConstructor.prototype, hydratedCssClass);
+                initHostElement(plt, cmpRegistry[cmpMeta.tagNameMeta] = cmpMeta, HostElementConstructor.prototype, hydratedCssClass);
+        true;
         {
           // add which attributes should be observed
           const observedAttributes = HostElementConstructor.observedAttributes = [];
@@ -2167,6 +1939,8 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
       // first check if there's an attribute
       // next check the app's global
       elm.mode = domApi.$getAttribute(elm, 'mode') || Context.mode);
+      // remember a "snapshot" of this host element's current attributes/child nodes/slots/etc
+            initHostSnapshot(plt.domApi, cmpMeta, elm);
       if (cmpMeta.componentConstructor) {
         // we're already all loaded up :)
         queueUpdate(plt, elm);
@@ -2179,8 +1953,7 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
           // and components are able to lazy load themselves
           // through standardized browser APIs
           const bundleId = 'string' === typeof cmpMeta.bundleIds ? cmpMeta.bundleIds : cmpMeta.bundleIds[elm.mode];
-          const useScopedCss = 2 /* ScopedCss */ === cmpMeta.encapsulation || 1 /* ShadowDom */ === cmpMeta.encapsulation && !domApi.$supportsShadowDom;
-          const url = resourcesUrl + bundleId + (useScopedCss ? '.sc' : '') + '.js';
+          const url = resourcesUrl + bundleId + (useScopedCss(domApi.$supportsShadowDom, cmpMeta) ? '.sc' : '') + '.js';
           // dynamic es module import() => woot!
                     import(url).then(importedModule => {
             // async loading of the module is done
@@ -2202,19 +1975,18 @@ s=document.querySelector("script[data-namespace='mibank']");if(s){resourcesUrl=s
         }
       }
     }
+    true;
     plt.attachStyles = ((plt, domApi, cmpMeta, modeName, elm) => {
       attachStyles(plt, domApi, cmpMeta, modeName, elm, customStyle);
     });
+    true;
     generateDevInspector(App, namespace, win, plt);
     true;
     // register all the components now that everything's ready
     // standard es2017 class extends HTMLElement
-    (App.components || []).map(data => {
-      const cmpMeta = parseComponentLoader(data);
-      return cmpRegistry[cmpMeta.tagNameMeta] = cmpMeta;
-    }).forEach(cmpMeta => defineComponent(cmpMeta, class extends HTMLElement {}));
+    (App.components || []).map(data => parseComponentLoader(data)).forEach(cmpMeta => defineComponent(cmpMeta, class extends HTMLElement {}));
     // create the componentOnReady fn
-    initCoreComponentOnReady(plt, App, win, win['s-apps'], win['s-cr']);
+    initCoreComponentOnReady(plt, App);
     // notify that the app has initialized and the core script is ready
     // but note that the components have not fully loaded yet
         App.initialized = true;

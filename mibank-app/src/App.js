@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import Account from "mibank-account-app";
 
 require("mibank-components").defineCustomElements(window);
 
@@ -30,6 +31,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <Account />
         <mi-heading />
         <mi-navigation />
         <mi-section>
