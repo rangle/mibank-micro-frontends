@@ -7,22 +7,26 @@ import Table from "./components/table";
 import * as components from "mibank-components";
 components.defineCustomElements(window);
 
-interface AccountProps {
+export interface AccountProps {
   backgroundColor?: Array<string>;
   data?: any[][];
+  labels?: Array<string>;
 }
 
-interface State {
+export interface State {
   selected: any;
 }
 
 class App extends React.Component<AccountProps, State, any> {
   private data;
   private backgroundColor;
+  private labels;
   constructor(props) {
     super(props);
-    this.data = [[20, 40, 90], [10, 90, 40]];
-    this.backgroundColor = ["pink", "blue", "red"];
+    const { backgroundColor, data, labels } = props;
+    this.data = data;
+    this.backgroundColor = backgroundColor;
+    this.labels = labels;
 
     this.state = {
       selected: this.data[0]
@@ -44,21 +48,21 @@ class App extends React.Component<AccountProps, State, any> {
     const data = this.state.selected;
     const backgroundColor = this.backgroundColor;
     return (
-      <div className="App">
+      <div className="Account">
         <mi-section>
           <mi-grid>
             <div slot="header">
               <mi-heading type="h2">{"Account Balances"}</mi-heading>
             </div>
             <Table
-              headings={["Pink", "Blue", "Red"]}
+              headings={this.labels}
               data={this.data}
               onRowSelect={this.updateSelected}
             />
             <div slot="sidebar">
               <PieChart
                 dataSet={[{ data, backgroundColor }]}
-                labels={["Pink", "Blue", "Red"]}
+                labels={this.labels}
               />
             </div>
           </mi-grid>
