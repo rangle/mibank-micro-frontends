@@ -3,7 +3,7 @@ import * as React from "react";
 export interface LineChartProps {
   dataSet: Array<any>;
   labels?: Array<string>;
-  onPieSelect?: Function;
+  onClick?: Function;
 }
 
 class LineChart extends React.Component<LineChartProps, any, void> {
@@ -18,13 +18,6 @@ class LineChart extends React.Component<LineChartProps, any, void> {
     this.labels = props.labels;
   }
 
-  public componentDidUpdate() {
-    this.lineGraph.current.updateChart({
-      datasets: this.props.dataSet,
-      labels: this.props.labels
-    });
-  }
-
   public componentDidMount() {
     this.lineGraph.current.data = {
       datasets: this.dataSet,
@@ -32,6 +25,10 @@ class LineChart extends React.Component<LineChartProps, any, void> {
     };
 
     this.lineGraph.current.options = {
+      onClick: e => {
+        if (this.props.onClick !== undefined)
+          this.props.onClick(this.lineGraph.current.getDataAtElement(e));
+      },
       scales: {
         yAxes: [
           {

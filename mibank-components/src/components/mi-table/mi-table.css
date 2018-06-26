@@ -25,6 +25,6 @@ table th {
   background-color: black;
 }
 
-tr.selected {
+.selected {
   border: red 3px solid;
 }

@@ -15,6 +15,7 @@ export class MiTable {
   @Prop() headings: Array<string> = [];
   @Prop() data: Array<any> = [];
   @Prop() rowOnClick?: Function;
+  @Prop() selected?: any = null;
   @Prop() ref?: any;
 
   private selectRow(e) {
@@ -28,11 +29,17 @@ export class MiTable {
   }
 
   private generateGrid(): JSX.Element {
-    const row = this.data.map((row, i) => {
-      const result = row.map(cell => <td>{cell}</td>);
+    const row = this.data.map((row, ri) => {
+      const result = row.map((cell, ci) => {
+        var selected;
+        if (this.selected !== null)
+          selected =
+            this.selected.dataSetIndex === ri && this.selected.dataIndex === ci;
+        return <td class={selected == true ? "selected" : ""}>{cell}</td>;
+      });
       return (
         <tr
-          class={this.selectedRow == i ? "selected" : ""}
+          class={this.selectedRow == ri ? "" : ""}
           onClick={e => this.selectRow(e)}
         >
           {result}

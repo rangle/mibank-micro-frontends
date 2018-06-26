@@ -258,6 +258,7 @@ declare global {
       'headings': Array<string>;
       'ref': any;
       'rowOnClick': Function;
+      'selected': any;
     }
   }
 
@@ -284,6 +285,7 @@ declare global {
       'headings'?: Array<string>;
       'ref'?: any;
       'rowOnClick'?: Function;
+      'selected'?: any;
     }
   }
 }

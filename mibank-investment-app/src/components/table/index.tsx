@@ -3,6 +3,7 @@ import * as React from "react";
 export interface TableProps {
   data: Array<any>;
   headings: Array<string>;
+  selected?: any;
   onRowSelect?: Function;
 }
 
@@ -23,10 +24,15 @@ class Table extends React.Component<TableProps> {
     this.onRowSelect(e.currentTarget.rowIndex);
   }
 
+  public componentDidUpdate() {
+    this.table.current.selected = this.props.selected;
+  }
+
   public componentDidMount() {
     this.table.current.headings = this.headings;
     this.table.current.data = this.data;
     this.table.current.rowOnClick = this.onClick.bind(this);
+    this.table.current.selected = this.props.selected;
   }
   public render() {
     return (
