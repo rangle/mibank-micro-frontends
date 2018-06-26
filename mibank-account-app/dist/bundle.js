@@ -86,8 +86,10 @@ var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
-        _this.data = [[20, 40, 90], [10, 90, 40]];
-        _this.backgroundColor = ["pink", "blue", "red"];
+        var backgroundColor = props.backgroundColor, data = props.data, labels = props.labels;
+        _this.data = data;
+        _this.backgroundColor = backgroundColor;
+        _this.labels = labels;
         _this.state = {
             selected: _this.data[0]
         };
@@ -105,14 +107,14 @@ var App = /** @class */ (function (_super) {
     App.prototype.render = function () {
         var data = this.state.selected;
         var backgroundColor = this.backgroundColor;
-        return (React.createElement("div", { className: "App" },
+        return (React.createElement("div", { className: "Account" },
             React.createElement("mi-section", null,
                 React.createElement("mi-grid", null,
                     React.createElement("div", { slot: "header" },
                         React.createElement("mi-heading", { type: "h2" }, "Account Balances")),
-                    React.createElement(Table, { headings: ["Pink", "Blue", "Red"], data: this.data, onRowSelect: this.updateSelected }),
+                    React.createElement(Table, { headings: this.labels, data: this.data, onRowSelect: this.updateSelected }),
                     React.createElement("div", { slot: "sidebar" },
-                        React.createElement(PieChart, { dataSet: [{ data: data, backgroundColor: backgroundColor }], labels: ["Pink", "Blue", "Red"] }))))));
+                        React.createElement(PieChart, { dataSet: [{ data: data, backgroundColor: backgroundColor }], labels: this.labels }))))));
     };
     return App;
 }(React.Component));

@@ -17,7 +17,7 @@ export interface State {
   selected: any;
 }
 
-class App extends React.Component<AccountProps, State, any> {
+class App extends React.Component<AccountProps, State, void> {
   private data;
   private backgroundColor;
   private labels;
