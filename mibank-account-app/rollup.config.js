@@ -5,5 +5,6 @@ export default {
   entry: "./src/App.tsx",
   dest: "./dist/bundle.js",
   format: "cjs",
-  plugins: [typescript(), css({ dest: "dist/mibank-account-app.css" })]
+  plugins: [typescript(), css({ dest: "dist/mibank-account-app.css" })],
+  external: ["mibank-components", "react"]
 };

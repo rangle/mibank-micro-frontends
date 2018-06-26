@@ -59,14 +59,23 @@
 </style>
 
 <body>
-  <mi-heading type="h1">Heading Test</mi-heading>
-  <mi-navigation></mi-navigation>
-  <mi-section></mi-section>
-  <mi-table></mi-table>
+  <mi-grid>
+    <div slot="header">
+      <mi-heading type="h1">Heading Test</mi-heading>
+      <mi-navigation />
+    </div>
+    <mi-section>
+      <mi-table/>
+    </mi-section>
+    <mi-section slot="sidebar">
+      <mi-chart-js />
+    </mi-section>
+    <mi-heading slot="footer" type="h2">Footer Test</mi-heading>
+  </mi-grid>
 </body>
 
 <script>
-  window.onload = function () {
+  (function () {
     var nav = document.querySelector('mi-navigation');
     nav.navItems = [{ label: "About" }, { label: "Services" }, { label: "Clients" }, { label: "Contact Us" }];
 
@@ -75,14 +84,13 @@
     table.data = [["ROW 1", "ROW 2"], ["ROW11", "ROW22"]];
 
     var data = { tim: "test" };
-    var chart = document.createElement('mi-chart-js');
+    var chart = document.querySelector('mi-chart-js');
     chart.type = "pie";
     chart.data = {
       datasets: [{ "data": [20, 20, 30], "backgroundColor": ["red", "yellow", "blue"] }],
       labels: ["red", "yellow", "blue"]
     };
-    document.body.appendChild(chart);
-  }
+  })()
 </script>
 
 </html>

@@ -83,6 +83,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface MiGrid {
+
+    }
+  }
+
+  interface HTMLMiGridElement extends StencilComponents.MiGrid, HTMLStencilElement {}
+
+  var HTMLMiGridElement: {
+    prototype: HTMLMiGridElement;
+    new (): HTMLMiGridElement;
+  };
+  interface HTMLElementTagNameMap {
+    'mi-grid': HTMLMiGridElement;
+  }
+  interface ElementTagNameMap {
+    'mi-grid': HTMLMiGridElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'mi-grid': JSXElements.MiGridAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MiGridAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface MiHeading {
       'text': string;
       'type': string;
