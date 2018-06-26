@@ -1,0 +1,11 @@
+.Investments {
+  margin: 10px;
+}
+
+.main {
+  align-self: center;
+}
+
+[slot="header"] {
+  text-align: center;
+}
