@@ -13,6 +13,7 @@ export class MiNavigation {
   @Element() navigationEl: HTMLMiNavigationElement;
   @State() isNavOpen: boolean = false;
   @Prop() navItems: Array<NavigationItem> = [];
+  @Prop() ref?: any;
 
   @Method()
   toggleNavigation(): void {
@@ -38,11 +39,13 @@ export class MiNavigation {
   render() {
     return (
       <div>
-        <span onClick={() => this.toggleNavigation()}>open</span>
+        <div class="menu" onClick={() => this.toggleNavigation()}>
+          <i class="im im-menu" />
+        </div>
         <div class="sidenav">
-          <a href="javascript:void(0)" onClick={() => this.closeNavigation()}>
-            Close
-          </a>
+          <div onClick={() => this.closeNavigation()}>
+            <i class="im im-x-mark" />
+          </div>
           {this.navItems.map(item => (
             <a href={item.link ? item.link : "#"}>{item.label}</a>
           ))}

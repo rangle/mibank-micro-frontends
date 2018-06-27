@@ -1,3 +1,27 @@
+.menu {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  right: 50px;
+}
+
+.im-menu {
+  color: #818181;
+}
+
+.im-menu:hover {
+  color: #f1f1f1;
+}
+
+.im-x-mark {
+  color: #818181;
+}
+
+.im-x-mark:hover {
+  color: #f1f1f1;
+}
+
 .sidenav {
   height: 100%;
   width: 250px;
@@ -9,6 +33,12 @@
   overflow-x: hidden;
   padding-top: 60px;
   transition: 0.5s;
+}
+
+.sidenav div {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 .sidenav.open {

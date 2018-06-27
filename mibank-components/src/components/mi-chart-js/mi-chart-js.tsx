@@ -32,11 +32,6 @@ export class ChartJS {
   @Method()
   getDataAtElement(evt): PieSectionData {
     return this.chart.getElementAtEvent(evt)[0];
-    // const label = this.chart.data.labels[point._index];
-    // const value = this.chart.data.datasets[point._datasetIndex].data[
-    //   point._index
-    // ];
-    // return { label, value };
   }
 
   componentDidLoad(): void {

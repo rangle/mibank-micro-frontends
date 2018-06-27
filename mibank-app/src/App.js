@@ -9,13 +9,24 @@ import Investments from "mibank-investment-app";
 require("mibank-components").defineCustomElements(window);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.navigation = React.createRef();
+  }
+  componentDidMount() {
+    this.navigation.current.navItems = [
+      { label: "Account Balances" },
+      { label: "Investments" },
+      { label: "Contact Us" }
+    ];
+  }
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <mi-heading type="h1">{"Welcome to MiBank"}</mi-heading>
-          <mi-navigation />
+          <mi-navigation ref={this.navigation} />
         </header>
         <Account
           data={[[40], [50], [50]]}

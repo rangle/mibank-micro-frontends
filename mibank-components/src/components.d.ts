@@ -155,6 +155,7 @@ declare global {
       'closeNavigation': () => void;
       'navItems': Array<NavigationItem>;
       'openNavigation': () => void;
+      'ref': any;
       'toggleNavigation': () => void;
     }
   }
@@ -179,6 +180,7 @@ declare global {
   namespace JSXElements {
     export interface MiNavigationAttributes extends HTMLAttributes {
       'navItems'?: Array<NavigationItem>;
+      'ref'?: any;
     }
   }
 }
