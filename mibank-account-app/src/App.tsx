@@ -8,45 +8,72 @@ import * as components from "mibank-components";
 components.defineCustomElements(window);
 
 export interface AccountProps {
-  backgroundColor?: Array<string>;
+  spending?: Array<object>;
   data?: any[][];
-  labels?: Array<string>;
+  headings?: Array<string>;
 }
 
 export interface State {
-  selected: any;
+  selected: number;
+}
+
+interface Spending {
+  labels: Array<string>;
+  amounts: Array<number>;
+}
+
+class AccountData {
+  data: Array<Array<number>>;
+  headings: Array<string>;
+  spending: Array<Spending>;
+
+  generateTable() {
+    const labels = ["Savings", "Taxes", "RRSP"];
+    return this.data.map((d, i) => [labels[i], ...d]);
+  }
+
+  generateLabels(dataIndex: number) {
+    const labels = this.spending.map((d, i) => {
+      return d.labels;
+    });
+    return labels[dataIndex];
+  }
+
+  generateDataset(dataIndex: number) {
+    const colours = [
+      "rgb(255, 99, 132)",
+      "rgb(75, 192, 192)",
+      "rgb(54, 162, 235)"
+    ];
+
+    const data = this.spending.map((d, i) => {
+      return d.amounts;
+    });
+
+    return [{ data: data[dataIndex], backgroundColor: colours }];
+  }
 }
 
 class App extends React.Component<AccountProps, State, void> {
-  private data;
-  private backgroundColor;
-  private labels;
+  private accountData: AccountData;
   constructor(props) {
     super(props);
-    const { backgroundColor, data, labels } = props;
-    this.data = data;
-    this.backgroundColor = backgroundColor;
-    this.labels = labels;
+    this.accountData = new AccountData();
+    this.accountData.headings = props.headings;
+    this.accountData.data = props.data;
+    this.accountData.spending = props.spending;
 
     this.state = {
-      selected: this.data[0]
+      selected: 0
     };
     this.updateSelected = this.updateSelected.bind(this);
   }
 
-  private lookupData(index: number): Array<number> {
-    return this.data[index - 1];
-  }
-
-  public updateSelected(e) {
-    this.setState({
-      selected: this.lookupData(e)
-    });
+  public updateSelected(index: number) {
+    this.setState({ selected: index - 1 });
   }
 
   public render() {
-    const data = this.state.selected;
-    const backgroundColor = this.backgroundColor;
     return (
       <div className="Account">
         <mi-section>
@@ -55,14 +82,14 @@ class App extends React.Component<AccountProps, State, void> {
               <mi-heading type="h2">{"Account Balances"}</mi-heading>
             </div>
             <Table
-              headings={this.labels}
-              data={this.data}
+              headings={this.accountData.headings}
+              data={this.accountData.generateTable()}
               onRowSelect={this.updateSelected}
             />
             <div slot="sidebar">
               <PieChart
-                dataSet={[{ data, backgroundColor }]}
-                labels={this.labels}
+                dataSet={this.accountData.generateDataset(this.state.selected)}
+                labels={this.accountData.generateLabels(this.state.selected)}
               />
             </div>
           </mi-grid>

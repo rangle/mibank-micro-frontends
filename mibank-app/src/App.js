@@ -18,9 +18,22 @@ class App extends Component {
           <mi-navigation />
         </header>
         <Account
-          data={[["Saving", 40], ["Chequing", 50], ["Investments", 50]]}
-          backgroundColor={["blue", "green", "red"]}
-          labels={["Account", "Balance"]}
+          data={[[40], [50], [50]]}
+          spending={[
+            {
+              labels: ["Entertainment", "Taxes", "Utilities"],
+              amounts: [10, 90, 15]
+            },
+            {
+              labels: ["Car Payment", "Mortgage", "Credit Card Bills"],
+              amounts: [15, 60, 85]
+            },
+            {
+              labels: ["Rental Income", "Bonus"],
+              amounts: [90, 2]
+            }
+          ]}
+          headings={["Account", "Balance"]}
         />
         <Investments
           headings={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]}

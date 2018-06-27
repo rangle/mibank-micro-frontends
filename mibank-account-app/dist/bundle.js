@@ -82,39 +82,58 @@ var Table = /** @class */ (function (_super) {
 }(React.Component));
 
 components.defineCustomElements(window);
+var AccountData = /** @class */ (function () {
+    function AccountData() {
+    }
+    AccountData.prototype.generateTable = function () {
+        var labels = ["Savings", "Taxes", "RRSP"];
+        return this.data.map(function (d, i) { return [labels[i]].concat(d); });
+    };
+    AccountData.prototype.generateLabels = function (dataIndex) {
+        var labels = this.spending.map(function (d, i) {
+            return d.labels;
+        });
+        return labels[dataIndex];
+    };
+    AccountData.prototype.generateDataset = function (dataIndex) {
+        var colours = [
+            "rgb(255, 99, 132)",
+            "rgb(75, 192, 192)",
+            "rgb(54, 162, 235)"
+        ];
+        var data = this.spending.map(function (d, i) {
+            return d.amounts;
+        });
+        return [{ data: data[dataIndex], backgroundColor: colours }];
+    };
+    return AccountData;
+}());
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
-        var backgroundColor = props.backgroundColor, data = props.data, labels = props.labels;
-        _this.data = data;
-        _this.backgroundColor = backgroundColor;
-        _this.labels = labels;
+        _this.accountData = new AccountData();
+        _this.accountData.headings = props.headings;
+        _this.accountData.data = props.data;
+        _this.accountData.spending = props.spending;
         _this.state = {
-            selected: _this.data[0]
+            selected: 0
         };
         _this.updateSelected = _this.updateSelected.bind(_this);
         return _this;
     }
-    App.prototype.lookupData = function (index) {
-        return this.data[index - 1];
-    };
-    App.prototype.updateSelected = function (e) {
-        this.setState({
-            selected: this.lookupData(e)
-        });
+    App.prototype.updateSelected = function (index) {
+        this.setState({ selected: index - 1 });
     };
     App.prototype.render = function () {
-        var data = this.state.selected;
-        var backgroundColor = this.backgroundColor;
         return (React.createElement("div", { className: "Account" },
             React.createElement("mi-section", null,
                 React.createElement("mi-grid", null,
                     React.createElement("div", { slot: "header" },
                         React.createElement("mi-heading", { type: "h2" }, "Account Balances")),
-                    React.createElement(Table, { headings: this.labels, data: this.data, onRowSelect: this.updateSelected }),
+                    React.createElement(Table, { headings: this.accountData.headings, data: this.accountData.generateTable(), onRowSelect: this.updateSelected }),
                     React.createElement("div", { slot: "sidebar" },
-                        React.createElement(PieChart, { dataSet: [{ data: data, backgroundColor: backgroundColor }], labels: this.labels }))))));
+                        React.createElement(PieChart, { dataSet: this.accountData.generateDataset(this.state.selected), labels: this.accountData.generateLabels(this.state.selected) }))))));
     };
     return App;
 }(React.Component));

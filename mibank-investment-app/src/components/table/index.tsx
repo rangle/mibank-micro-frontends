@@ -11,7 +11,7 @@ class Table extends React.Component<TableProps> {
   private table;
   private headings;
   private data;
-  private onRowSelect;
+  private onRowSelect: Function = () => {};
   constructor(props) {
     super(props);
     this.table = React.createRef();
@@ -21,7 +21,9 @@ class Table extends React.Component<TableProps> {
   }
 
   private onClick(e) {
-    this.onRowSelect(e.currentTarget.rowIndex);
+    this.onRowSelect !== undefined
+      ? this.onRowSelect(e.currentTarget.rowIndex)
+      : null;
   }
 
   public componentDidUpdate() {
